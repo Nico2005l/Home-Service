@@ -7,7 +7,7 @@ const EditService = () => {
       <Navbar />
       {/* Sección superior: Datos principales */}
       
-        <h2 className="text-3xl font-bold p-6 pb-0 text-white">Editar Servicio</h2>
+        <h2 className="text-3xl font-semibold p-6 pb-0 text-white">Editar Post</h2>
       <div className="grid md:grid-cols-2 gap-8 items-start p-6">
 
         {/* Imagen principal */}
@@ -93,7 +93,8 @@ const EditService = () => {
           <hr />
           {/* Botón guardar cambios */}
           <div className="w-full pt-4">
-            <button className="w-full bg-[#0052CC] hover:bg-[#00C6A0] text-white py-3 rounded hover:bg-[#00C6A0] transition">
+            <button className="w-full bg-[#0052CC] hover:bg-[#00C6A0] text-white py-3 rounded  transition"
+            onClick={() => window.location.href = '/posteos'}>
               Guardar Cambios
             </button>
           </div>

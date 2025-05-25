@@ -47,9 +47,9 @@ const ServiceProfile = () => {
       <div className="bg-white rounded-lg shadow-md p-6 space-y-4 m-4 mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
           <img
-            src="https://upload.wikimedia.org/wikipedia/en/a/a9/MarioNSMBUDeluxe.png"
+            src="/media/OIP.jpg"
             alt="Mario"
-            className="w-48 mx-auto rounded-lg shadow-md border-4 border-blue-800"
+            className="w-48 mx-auto rounded-lg shadow-md border-4 border-blue-800 scale-3d"
           />
           <div className="space-y-2">
             <h2 className="text-blue-950 text-3xl">Plomero</h2>

@@ -1,8 +1,13 @@
 import React from 'react';
 
 import Navbar from './NavBar';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const LoginForm = () => {
+
+  const navigate = useNavigate();
   return (
     <div className="bg-[#081F41] min-h-screen">
       <Navbar />
@@ -29,6 +34,11 @@ const LoginForm = () => {
             <button
               type="submit"
               className="w-full bg-[#0052CC] text-white py-2 rounded-md hover:bg-[#00C6A0] transition"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/');
+                
+              }}
             >
               Iniciar sesión
             </button>

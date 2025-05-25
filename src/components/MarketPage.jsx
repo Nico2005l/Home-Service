@@ -16,6 +16,9 @@ const MarketPage = () => {
     <div className="bg-[#081F41] min-h-screen">
       <NavBar />
 
+      {/* Sección superior: Título */}
+      <h1 className="text-3xl font-semibold text-white p-6 mt-2">Mercado</h1>
+
       {/* Main content */}
       <div className="flex flex-col lg:flex-row gap-4 px-6 py-6">
         {/* Filtros */}

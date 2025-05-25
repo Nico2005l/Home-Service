@@ -1,7 +1,10 @@
 import React from 'react';
 import Navbar from './NavBar';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
+
+  const navigate = useNavigate();
   return (
     <div className="bg-[#081F41] min-h-screen ">
       <Navbar />
@@ -39,6 +42,10 @@ const RegisterForm = () => {
           <button
             type="submit"
             className="w-full bg-[#0052CC] text-white py-2 rounded-md hover:bg-[#00C6A0] transition font-semibold"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/login');
+            }}
           >
             Registrar
           </button>

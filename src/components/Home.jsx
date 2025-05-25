@@ -13,7 +13,8 @@ const HomePage = () => {
         <p className="text-xl text-gray-300 max-w-xl mx-auto mb-8">
           Conecta con profesionales verificados para cualquier necesidad en tu hogar u oficina.
         </p>
-        <button className="bg-[#0052CC] hover:bg-[#00C6A0] text-white px-8 py-3 rounded-full font-semibold shadow transition duration-200">
+        <button className="bg-[#0052CC] hover:bg-[#00C6A0] text-white px-8 py-3 rounded-full font-semibold shadow transition duration-200"
+          onClick={() => window.location.href = '/mercado'}>
           Ver Profesionales
         </button>
       </header>
@@ -73,7 +74,8 @@ const HomePage = () => {
       <footer className="bg-gradient-to-r from-[#0052CC] to-[#00C6A0] py-16 text-white text-center">
         <h2 className="text-3xl font-bold mb-4">¿Listo para encontrar al profesional ideal?</h2>
         <p className="mb-6">Únete hoy y accede a una red de expertos confiables</p>
-        <button className="bg-[#66B2FF] text-[#081F41] font-semibold px-6 py-3 rounded-full hover:bg-[#00C6A0] hover:text-white transition">
+        <button className="bg-[#66B2FF] text-[#081F41] font-semibold px-6 py-3 rounded-full hover:bg-[#00C6A0] hover:text-white transition"
+          onClick={() => window.location.href = '/registro'}>
           Crear cuenta
         </button>
       </footer>

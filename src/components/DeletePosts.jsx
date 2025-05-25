@@ -19,14 +19,15 @@ const DeletePosts = () => {
   const handleDelete = () => {
     // Aquí va la lógica para eliminar
     alert(`Eliminando posts con ID: ${selected.join(', ')}`);
+    window.location.href = '/posteos'
   };
 
   return (
     <div className="bg-[#081F41] min-h-screen ">
       <NavBar />
-      <h2 className="text-2xl font-semibold text-white p-6 mt-2">Eliminar Publicaciones</h2>
+      <h2 className="text-3xl font-semibold text-white p-6 mt-2">Eliminar Post</h2>
 
-      <div className="bg-white p-6 rounded-lg shadow-md m-6 mt-3">
+      <div className="bg-white p-6 rounded-lg shadow-md m-6 mt-3 mb-0">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 p-6 ">
         {mockPosts.map((post) => (
           <div

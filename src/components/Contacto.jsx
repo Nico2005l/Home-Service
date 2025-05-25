@@ -47,6 +47,11 @@ const ContactPage = () => {
                         <button
                             type="submit"
                             className="w-full bg-[#0052CC] text-white rounded-md py-2 hover:bg-[#00C6A0] transition font-semibold"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                // Aquí puedes agregar la lógica para enviar el formulario
+                                alert('Mensaje enviado');
+                            }}
                         >
                             Enviar
                         </button>

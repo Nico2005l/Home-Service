@@ -1,13 +1,21 @@
 import React from 'react';
 import NavBar from '../components/NavBar';
 
+import { useNavigate } from 'react-router-dom';
+
 const CreateService = () => {
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    navigate('/posteos');
+  };
   return (
     <div className="bg-[#081F41] min-h-screen">
       <NavBar />
-
-      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-10">
-        <h1 className="text-3xl font-bold text-blue-950 mb-6">Crear Posteo</h1>
+      <h1 className="text-3xl font-semibold text-white p-6 mt-2">Crear Post</h1>
+      <div className=" bg-white p-6 rounded-lg shadow-md m-6 mt-3 mb-0">
+        
         <form className="grid md:grid-cols-2 gap-8 items-start">
 
           {/* Imagen principal */}
@@ -16,7 +24,7 @@ const CreateService = () => {
               <span className="text-blue-400">Previsualización</span>
               <button
                 type="button"
-                className="absolute top-2 left-2 bg-[#0052CC] text-white text-xs px-2 py-1 rounded transition-colors duration-200 hover:bg-[#00C6A0]"
+                className="absolute top-2 left-2 bg-[#0052CC] text-white text-md px-2 py-1 rounded transition-colors duration-200 hover:bg-[#00C6A0]"
               >
                 Elegir Imagen
               </button>
@@ -77,6 +85,7 @@ const CreateService = () => {
               <button
                 type="submit"
                 className="w-full bg-[#0052CC] text-white py-3 rounded transition-colors duration-200 hover:bg-[#00C6A0]"
+                onClick={handleSubmit}
               >
                 Crear
               </button>
