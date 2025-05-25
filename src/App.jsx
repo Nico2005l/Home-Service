@@ -1,34 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
+import Navbar from './components/NavBar'
+import Registro from './components/Registro'
+import Login from './components/Login'
+import CambiarContraseña from './components/CambiarContraseña'
+import Home from './components/Home'
+import MarketPage from './components/MarketPage'
+import Contacto from './components/Contacto'
+import MenuPosteos from './components/MenuPosteos'
+import Profile from './components/Profile'
+import EditProfile from './components/EditarPerfil'
+import ServiceProfile from './components/ServiceProfile'
+import EditService from './components/EditarService'
+import CreateService from './components/CrearService'
+import DeletePosts from './components/DeletePosts'
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return ( 
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+  return (
+    <Router>
+      
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/recuperar" element={<CambiarContraseña />} />
+        <Route path="/mercado" element={<MarketPage />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/posteos" element={<MenuPosteos />} />
+        <Route path="/perfil" element={<Profile />} />
+        <Route path="/editar-perfil" element={<EditProfile />} />
+        <Route path="/servicio" element={<ServiceProfile />} />
+        <Route path="/editar-post" element={<EditService />} />
+        <Route path="/crear-post" element={<CreateService />} />
+        <Route path="/borrar-post" element={<DeletePosts />} />
+      </Routes>
+      
+    </Router>
   )
 }
 
