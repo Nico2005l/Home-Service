@@ -1,3 +1,4 @@
+
 import React from 'react';
 import NavBar from '../components/NavBar'; // Ajusta la ruta si es necesario
 import { useNavigate } from 'react-router-dom';
@@ -37,3 +38,7 @@ const OpcionesMenu = () => {
 };
 
 export default OpcionesMenu;
+
+
+
+

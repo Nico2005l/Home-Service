@@ -15,6 +15,8 @@ import ServiceProfile from './components/ServiceProfile'
 import EditService from './components/EditarService'
 import CreateService from './components/CrearService'
 import DeletePosts from './components/DeletePosts'
+import NotFoundPage from './components/NotFound'
+import ReviewPage from './components/ReviewPage'
 
 function App() {
 
@@ -35,6 +37,8 @@ function App() {
         <Route path="/editar-post" element={<EditService />} />
         <Route path="/crear-post" element={<CreateService />} />
         <Route path="/borrar-post" element={<DeletePosts />} />
+        <Route path="/review" element={<ReviewPage />} />
+        <Route path="*" element={<NotFoundPage/>} />
       </Routes>
       
     </Router>
