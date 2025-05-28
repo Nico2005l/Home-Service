@@ -78,6 +78,8 @@ const ServiceProfile = () => {
           ))}
         </div>
 
+        
+
         {/* Reseñas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {reviews.map((review, index) => (
@@ -98,6 +100,13 @@ const ServiceProfile = () => {
               </div>
             </div>
           ))}
+        </div>
+        {/* Botón para dejar reseña */}
+        <div className="flex justify-center mt-6 w-full">
+          <button className="bg-[#0052CC] text-white px-4 py-2 rounded font-semibold hover:bg-[#00C6A0] transition w-fit"
+            onClick={() => window.location.href = "/review"}>
+            Cuentanos tu experiencia
+          </button>
         </div>
       </div>
     </div>
