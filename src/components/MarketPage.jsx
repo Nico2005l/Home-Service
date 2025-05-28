@@ -4,12 +4,12 @@ import NavBar from '../components/NavBar'; // Ajusta la ruta si es necesario
 
 const MarketPage = () => {
   const services = [
-    { title: "Reparación de bacha", price: "$15000", image: "img1.jpg" },
-    { title: "Mantenimiento de aire acondicionado", price: "$19500", image: "img2.jpg" },
-    { title: "Electricista", price: "$10000", image: "img3.jpg" },
-    { title: "Fumigador", price: "$6500", image: "img4.jpg" },
-    { title: "Limpieza a domicilio", price: "$10000", image: "img5.jpg" },
-    { title: "Gasista", price: "$15000", image: "img6.jpg" },
+    { title: "Tutoria", price: "$15000", image: "/media/Julioprofe_1.jpg" },
+    { title: "Mantenimiento de aire acondicionado", price: "$19500", image: "/media/mantenimiento-aire-acondicionado.jpg" },
+    { title: "Electricista", price: "$10000", image: "/media/electricista.png" },
+    { title: "Fumigador", price: "$6500", image: "/media/Fumigador.jpg" },
+    { title: "Limpieza a domicilio", price: "$10000", image: '/media/servicio-limpieza-domicilio.jpg' },
+    { title: "Gasista", price: "$15000", image: '/media/gasista.jpg' },
   ];
 
   return (
