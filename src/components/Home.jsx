@@ -8,7 +8,7 @@ const HomePage = () => {
       {/* Hero Section */}
       <header className="text-center py-24 px-6">
         <h1 className="text-5xl font-extrabold mb-4 text-white">
-          Home Service
+          Home Service 54
         </h1>
         <p className="text-xl text-gray-300 max-w-xl mx-auto mb-8">
           Conecta con profesionales verificados para cualquier necesidad en tu hogar u oficina.
