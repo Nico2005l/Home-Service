@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Navbar from './NavBar';
+import Navbar from '../components/NavBar';
 import { ArrowLeft } from 'lucide-react';
 
 const EditService = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
-  const [images, setImages] = useState([]);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [newImageFile, setNewImageFile] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
-      console.log('[FRONT] Fetching post with ID:', id);
       try {
         const res = await fetch(`http://localhost:3000/api/services/${id}`);
         if (!res.ok) throw new Error('No se encontró el servicio');
         const data = await res.json();
-        console.log('[FRONT] Datos recibidos:', data);
         setPost(data);
-        setImages(data.images || []);
+        if (data.images?.[0]) setImagePreview(data.images[0]);
       } catch (err) {
-        console.error('[FRONT] Error al obtener post:', err);
         setError('No se pudo cargar el servicio');
       }
     };
@@ -33,21 +31,51 @@ const EditService = () => {
     setPost((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setImagePreview(URL.createObjectURL(file));
+    setNewImageFile(file);
+  };
+
   const handleUpdate = async () => {
     if (!post.name || !post.price || !post.description || !post.category) {
       alert('Todos los campos son obligatorios.');
       return;
     }
 
+    let updatedImageUrl = post.images?.[0] || null;
+
+    if (newImageFile) {
+      const formData = new FormData();
+      formData.append('image', newImageFile);
+
+      try {
+        const res = await fetch('http://localhost:3000/api/services/upload-image', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+        if (data.url) updatedImageUrl = data.url;
+        else throw new Error();
+      } catch {
+        alert('Error al subir la nueva imagen.');
+        return;
+      }
+    }
+
     try {
       await fetch(`http://localhost:3000/api/services/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...post, images }),
+        body: JSON.stringify({
+          ...post,
+          images: updatedImageUrl ? [updatedImageUrl] : []
+        })
       });
       navigate('/editar-posts');
-    } catch (err) {
-      alert('Error al actualizar');
+    } catch {
+      alert('Error al actualizar el servicio.');
     }
   };
 
@@ -81,51 +109,23 @@ const EditService = () => {
       </div>
 
       <h2 className="text-3xl font-semibold p-6 pb-0 text-white">Editar Post</h2>
+
       <div className="grid md:grid-cols-2 gap-8 items-start p-6">
-        {/* Galería */}
+        {/* Imagen actual */}
         <div className="space-y-4">
-          <h3 className="text-white text-lg">Imágenes del Servicio</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            {images.map((url, idx) => (
-              <div key={idx} className="relative bg-gray-100 aspect-square rounded border border-blue-800">
-                <img src={url} alt={`img-${idx}`} className="w-full h-full object-cover rounded" />
-                <button
-                  className="absolute top-2 right-2 bg-red-600 hover:bg-red-800 text-white text-xs px-2 py-1 rounded"
-                  onClick={() => {
-                    const newImages = [...images];
-                    newImages.splice(idx, 1);
-                    setImages(newImages);
-                  }}
-                >
-                  Eliminar
-                </button>
-              </div>
-            ))}
+          <label className="text-white block mb-1">Imágenes del Servicio</label>
+          <div className="relative w-full aspect-square bg-gray-200 rounded-md flex items-center justify-center overflow-hidden">
+            {imagePreview ? (
+              <img src={imagePreview} alt="preview" className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-blue-950">Sin imagen</span>
+            )}
           </div>
           <input
             type="file"
             accept="image/*"
+            onChange={handleImageChange}
             className="text-white mt-2"
-            onChange={async (e) => {
-              const file = e.target.files[0];
-              if (!file) return;
-              const formData = new FormData();
-              formData.append('image', file);
-              try {
-                const res = await fetch('http://localhost:3000/api/services/upload-image', {
-                  method: 'POST',
-                  body: formData
-                });
-                const data = await res.json();
-                if (data.url) {
-                  setImages(prev => [...prev, data.url]);
-                } else {
-                  console.error('Error al subir imagen:', data);
-                }
-              } catch (err) {
-                console.error('Error de red al subir imagen:', err);
-              }
-            }}
           />
         </div>
 
@@ -140,6 +140,7 @@ const EditService = () => {
               className="w-full border border-blue-800 rounded px-3 py-2 bg-gray-100 text-blue-950"
             />
           </div>
+
           <div>
             <label className="text-blue-950 font-semibold">Precio</label>
             <input
@@ -150,6 +151,7 @@ const EditService = () => {
               className="w-full border border-blue-800 rounded px-3 py-2 bg-gray-100 text-blue-950"
             />
           </div>
+
           <div>
             <label className="text-blue-950 font-semibold">Descripción</label>
             <textarea
@@ -160,6 +162,7 @@ const EditService = () => {
               rows={3}
             />
           </div>
+
           <div>
             <label className="text-blue-950 font-semibold">Tipo de Servicio</label>
             <input
@@ -169,6 +172,7 @@ const EditService = () => {
               className="w-full border border-blue-800 rounded px-3 py-2 bg-gray-100 text-blue-950"
             />
           </div>
+
           <div className="pt-4">
             <button
               onClick={handleUpdate}
