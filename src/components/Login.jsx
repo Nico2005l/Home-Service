@@ -24,7 +24,8 @@ const LoginForm = () => {
       if (!res.ok) {
         throw new Error('Credenciales inválidas');
       }
-      // Puedes guardar el token aquí si lo necesitas
+      const data = await res.json();
+      localStorage.setItem('token', data.token);
       navigate('/');
     } catch (err) {
       setError(err.message);
