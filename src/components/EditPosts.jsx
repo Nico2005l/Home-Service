@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
-import { Pencil, Trash2 } from 'lucide-react';
+import { Pencil, Trash2, ArrowLeft } from 'lucide-react';
 
 const EditPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -37,22 +37,40 @@ const EditPosts = () => {
   return (
     <div className="bg-[#081F41] min-h-screen">
       <NavBar />
+      <div className="px-6 mt-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center text-white hover:text-[#00C6A0] transition"
+        >
+          <ArrowLeft className="mr-2" />
+          Volver
+        </button>
+      </div>
+
       <h2 className="text-3xl font-semibold text-white p-6 mt-2">Editar / Eliminar Posteos</h2>
 
       <div className="bg-white p-6 rounded-lg shadow-md m-6 mt-3 mb-0">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
           {posts.map((post) => (
             <div key={post.id} className="relative border rounded-lg bg-[#081F41] p-2">
-              <div className="aspect-square bg-gray-300 flex items-center justify-center rounded">
-                <span className="text-blue-950 font-semibold text-sm">Imagen</span>
+              <div className="aspect-square bg-gray-300 flex items-center justify-center rounded overflow-hidden">
+                {post.images && post.images.length > 0 ? (
+                  <img
+                    src={post.images[0]}
+                    alt="Imagen del servicio"
+                    className="w-full h-full object-cover rounded"
+                  />
+                ) : (
+                  <span className="text-blue-950 font-semibold text-sm">Sin imagen</span>
+                )}
               </div>
+
               <div className="mt-2 text-white text-center">{post.name}</div>
 
               {/* Botón Editar */}
               <button
                 className="absolute top-2 left-2 bg-[#0052CC] hover:bg-[#00C6A0] text-white p-1 rounded-full"
                 onClick={() => navigate(`/editar-post/${post.id}`)}
-
               >
                 <Pencil size={16} />
               </button>

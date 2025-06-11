@@ -12,6 +12,7 @@ const CreateService = () => {
     category: ''
   });
 
+  const [imageUrl, setImageUrl] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
@@ -35,6 +36,30 @@ const CreateService = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const res = await fetch('http://localhost:3000/api/services/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (data.url) {
+        setImageUrl(data.url);
+      } else {
+        console.error('Respuesta inválida del servidor:', data);
+      }
+    } catch (error) {
+      console.error('Error al subir la imagen:', error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,7 +78,8 @@ const CreateService = () => {
           name: title.trim(),
           price: parseFloat(price),
           description: description.trim(),
-          category: category.trim()
+          category: category.trim(),
+          images: imageUrl ? [imageUrl] : []
         })
       });
 
@@ -62,6 +88,7 @@ const CreateService = () => {
       if (response.ok) {
         setSuccessMessage('✅ Servicio creado correctamente.');
         setFormData({ title: '', price: '', description: '', category: '' });
+        setImageUrl(null);
       } else {
         setSuccessMessage(`❌ Error: ${data.error}`);
       }
@@ -87,7 +114,17 @@ const CreateService = () => {
           {/* Imagen principal */}
           <div className="space-y-4">
             <div className="relative w-full aspect-square bg-blue-950 rounded-md flex items-center justify-center border border-blue-800">
-              <span className="text-blue-400">Previsualización</span>
+              {imageUrl ? (
+                <img src={imageUrl} alt="preview" className="w-full h-full object-cover rounded-md" />
+              ) : (
+                <span className="text-blue-400">Previsualización</span>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="block w-full text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-[#0052CC] file:text-white hover:file:bg-[#00C6A0]"
+              />
               <button
                 type="button"
                 className="absolute top-2 left-2 bg-[#0052CC] text-white text-md px-2 py-1 rounded transition-colors duration-200 hover:bg-[#00C6A0]"

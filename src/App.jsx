@@ -37,7 +37,7 @@ function App() {
         <Route path="/crear-post" element={<CreateService />} />
         <Route path="/review" element={<ReviewPage />} />
 
-        <Route path="/backoffice" element={<MenuBackOffice />} /> {/* ✅ Esta faltaba */}
+        <Route path="/backoffice" element={<MenuBackOffice />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
