@@ -151,3 +151,16 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
+
+
+/*
+Color Palette used in this component:
+
+- Dark Blue (background): #081F41
+- Blue (button, focus ring): #0052CC
+- Teal/Green (button hover, focus ring): #00C6A0
+- White (card background): #FFFFFF
+- Gray (text): #808080, #4B5563 (Tailwind's text-gray-800)
+
+You can adjust or expand this palette as needed for your design.
+*/
