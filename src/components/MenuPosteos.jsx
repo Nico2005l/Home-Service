@@ -1,10 +1,8 @@
-
 import React from 'react';
-import NavBar from '../components/NavBar'; // Ajusta la ruta si es necesario
+import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
 
-
-const OpcionesMenu = () => {
+const MenuPosteos = () => {
   const navigate = useNavigate();
 
   return (
@@ -21,15 +19,9 @@ const OpcionesMenu = () => {
           </button>
           <button
             className="w-full bg-[#0052CC] text-white py-2 rounded-md hover:bg-[#00C6A0] transition font-semibold border border-blue-800"
-            onClick={() => navigate('/editar-post')}
+            onClick={() => navigate('/editar-posts')}
           >
-            Editar Post
-          </button>
-          <button
-            className="w-full bg-[#0052CC] text-white py-2 rounded-md hover:bg-[#00C6A0] transition font-semibold border border-blue-800"
-            onClick={() => navigate('/borrar-post')}
-          >
-            Borrar Post
+            Editar / Eliminar Post
           </button>
         </div>
       </div>
@@ -37,8 +29,4 @@ const OpcionesMenu = () => {
   );
 };
 
-export default OpcionesMenu;
-
-
-
-
+export default MenuPosteos;
