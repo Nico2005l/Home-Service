@@ -17,6 +17,7 @@ import CreateService from './components/CrearService'
 import DeletePosts from './components/DeletePosts'
 import NotFoundPage from './components/NotFound'
 import ReviewPage from './components/ReviewPage'
+import MenuBackOffice from './components/MenuBackOffice'
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/borrar-post" element={<DeletePosts />} />
         <Route path="/review" element={<ReviewPage />} />
         <Route path="*" element={<NotFoundPage/>} />
+        <Route path="/backoffice" element={<MenuBackOffice />} />
       </Routes>
       
     </Router>
