@@ -1,7 +1,23 @@
 import React from 'react';
 import NavBar from '../components/NavBar'; // ajusta la ruta si es necesario
 
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const isAuthenticated = () => {
+    return !!localStorage.getItem('token');
+};
+
+
 const ContactPage = () => {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isAuthenticated()) {
+            navigate('/login'); // Redirige a la página de login
+        }
+    }, [navigate]);
     return (
         <div className="bg-[#081F41] min-h-screen">
             <NavBar />
