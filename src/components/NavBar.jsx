@@ -9,8 +9,11 @@ const navLinks = [
     { label: 'Perfil', to: '/perfil' },
 ];
 
+
 const Navbar = () => {
     const [active, setActive] = useState(null);
+
+    const isAuthenticated = !!localStorage.getItem("token");
 
     return (
         <nav className="bg-[#081F41] p-4 shadow-md sticky top-0 z-50">
@@ -52,24 +55,28 @@ const Navbar = () => {
 
                 {/* Botones de acción */}
                 <div className="flex items-center space-x-2">
-                    <Link to="/login">
-                        <button
-                            className="px-3 py-1 text-sm rounded-md bg-[#0052CC] text-white 
-                                hover:bg-[#00C6A0] hover:scale-105 transition-all duration-300 shadow-md 
-                                focus:outline-none focus:ring-2 focus:ring-[#66B2FF]"
-                        >
-                            Iniciar Sesión
-                        </button>
-                    </Link>
-                    <Link to="/registro">
-                        <button
-                            className="px-3 py-1 text-sm rounded-md bg-[#0052CC] text-white 
-                                hover:bg-[#00C6A0] hover:scale-105 transition-all duration-300 shadow-md 
-                                focus:outline-none focus:ring-2 focus:ring-[#66B2FF]"
-                        >
-                            Registro
-                        </button>
-                    </Link>
+                    {!isAuthenticated && (
+                        <>
+                            <Link to="/login">
+                                <button
+                                    className="px-3 py-1 text-sm rounded-md bg-[#0052CC] text-white 
+                                        hover:bg-[#00C6A0] hover:scale-105 transition-all duration-300 shadow-md 
+                                        focus:outline-none focus:ring-2 focus:ring-[#66B2FF]"
+                                >
+                                    Iniciar Sesión
+                                </button>
+                            </Link>
+                            <Link to="/registro">
+                                <button
+                                    className="px-3 py-1 text-sm rounded-md bg-[#0052CC] text-white 
+                                        hover:bg-[#00C6A0] hover:scale-105 transition-all duration-300 shadow-md 
+                                        focus:outline-none focus:ring-2 focus:ring-[#66B2FF]"
+                                >
+                                    Registro
+                                </button>
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>
