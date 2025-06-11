@@ -11,12 +11,12 @@ import MenuPosteos from './components/MenuPosteos'
 import Profile from './components/Profile'
 import EditProfile from './components/EditarPerfil'
 import ServiceProfile from './components/ServiceProfile'
-import EditPosts from './components/EditPosts';
-import EditService from './components/EditService';
+import EditPosts from './components/EditPosts'
+import EditService from './components/EditService'
 import CreateService from './components/CrearService'
 import NotFoundPage from './components/NotFound'
 import ReviewPage from './components/ReviewPage'
-import MenuBackOffice from './components/MenuBackOffice'
+import MenuBackOffice from './components/MenuBackOffice' // ✅ ESTA ya está bien
 
 function App() {
   return (
@@ -33,9 +33,12 @@ function App() {
         <Route path="/editar-perfil" element={<EditProfile />} />
         <Route path="/servicio" element={<ServiceProfile />} />
         <Route path="/editar-posts" element={<EditPosts />} />
-        <Route path="/editar-post/:id" element={<EditService />} />   
+        <Route path="/editar-post/:id" element={<EditService />} />
         <Route path="/crear-post" element={<CreateService />} />
         <Route path="/review" element={<ReviewPage />} />
+
+        <Route path="/backoffice" element={<MenuBackOffice />} /> {/* ✅ Esta faltaba */}
+
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
