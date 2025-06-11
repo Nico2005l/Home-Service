@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './MisPosteosStyles.css';
 
 const DeletePosts = () => {
   const [id, setId] = useState('');
@@ -11,20 +12,20 @@ const DeletePosts = () => {
     });
 
     const data = await response.json();
-    if (response.ok) {
-      alert(`Servicio eliminado`);
-    } else {
-      alert(`Error: ${data.error}`);
-    }
+    response.ok
+      ? alert(`Servicio eliminado correctamente`)
+      : alert(`Error: ${data.error}`);
   };
 
   return (
-    <div>
-      <h2>Borrar Servicio</h2>
-      <form onSubmit={handleDelete}>
-        <input placeholder="ID del servicio a borrar" value={id} onChange={(e) => setId(e.target.value)} />
-        <button type="submit">Borrar</button>
-      </form>
+    <div className="container-posteo">
+      <div className="form-box">
+        <h2>Borrar Servicio</h2>
+        <form onSubmit={handleDelete}>
+          <input placeholder="ID del servicio a borrar" value={id} onChange={e => setId(e.target.value)} />
+          <button type="submit">Borrar</button>
+        </form>
+      </div>
     </div>
   );
 };
