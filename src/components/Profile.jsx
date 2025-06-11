@@ -4,6 +4,19 @@ import Navbar from "./NavBar";
 
 const Profile = () => {
 const navigate = useNavigate();
+
+const isAuthenticated = !!localStorage.getItem("token");
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.replace("/");
+    };
+
+if (!isAuthenticated) {
+    navigate("/login");
+    return null; // Evita renderizar el componente si no está autenticado
+}
+
 return (
     <div className="bg-[#081F41] min-h-screen">
         <Navbar />
@@ -66,6 +79,26 @@ return (
                         className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
                     />
                 </div>
+
+                <div className="flex flex-col sm:flex-row items-start sm:items-center">
+                    <label className="font-semibold text-gray-800 w-40">Teléfono</label>
+                    <input
+                        type="text"
+                        value="+54 11 5555 1234"
+                        readOnly
+                        className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
+                    />
+                </div>
+
+                <div className="flex justify-center mt-6">
+                    <button
+                        onClick={handleLogout}
+                        className="px-8 py-2 bg-red-600 text-white font-semibold rounded-xl shadow hover:bg-red-700 transition-colors duration-200"
+                    >
+                        Cerrar Sesión
+                    </button>
+                </div>
+
             </div>
         </main>
     </div>

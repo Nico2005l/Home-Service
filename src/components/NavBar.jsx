@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 const navLinks = [
     { label: 'Home', to: '/' },
     { label: 'Mercado', to: '/mercado' },
@@ -9,16 +9,20 @@ const navLinks = [
     { label: 'Perfil', to: '/perfil' },
 ];
 
-
+// Verifica si el usuario está autenticado
 const Navbar = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setIsAuthenticated(!!localStorage.getItem('token'));
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
     const [active, setActive] = useState(null);
-
-    const isAuthenticated = !!localStorage.getItem("token");
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        window.location.reload();
-    };
 
     return (
         <nav className="bg-[#081F41] p-4 shadow-md sticky top-0 z-50">
@@ -81,16 +85,6 @@ const Navbar = () => {
                                 </button>
                             </Link>
                         </>
-                    )}
-                    {isAuthenticated && (
-                        <button
-                            onClick={handleLogout}
-                            className="px-3 py-1 text-sm rounded-md bg-red-600 text-white 
-                                hover:bg-red-700 hover:scale-105 transition-all duration-300 shadow-md 
-                                focus:outline-none focus:ring-2 focus:ring-red-400"
-                        >
-                            Cerrar sesión
-                        </button>
                     )}
                 </div>
             </div>
