@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/NavBar';
 import { ArrowLeft } from 'lucide-react';
@@ -6,6 +6,8 @@ import { ArrowLeft } from 'lucide-react';
 const EditService = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const fileInputRef = useRef();
+
   const [post, setPost] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [newImageFile, setNewImageFile] = useState(null);
@@ -111,22 +113,32 @@ const EditService = () => {
       <h2 className="text-3xl font-semibold p-6 pb-0 text-white">Editar Post</h2>
 
       <div className="grid md:grid-cols-2 gap-8 items-start p-6">
-        {/* Imagen actual */}
+        {/* Imagen actual con botón para cambiar */}
         <div className="space-y-4">
           <label className="text-white block mb-1">Imágenes del Servicio</label>
-          <div className="relative w-full aspect-square bg-gray-200 rounded-md flex items-center justify-center overflow-hidden">
+          <div className="relative w-full aspect-square bg-gray-200 rounded-md flex items-center justify-center overflow-hidden border border-blue-800">
             {imagePreview ? (
               <img src={imagePreview} alt="preview" className="w-full h-full object-cover" />
             ) : (
               <span className="text-blue-950">Sin imagen</span>
             )}
+
+            <button
+              type="button"
+              onClick={() => fileInputRef.current.click()}
+              className="absolute top-2 left-2 bg-[#0052CC] hover:bg-[#00C6A0] text-white px-3 py-1 text-sm rounded"
+            >
+              Cambiar imagen
+            </button>
+
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              className="hidden"
+            />
           </div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="text-white mt-2"
-          />
         </div>
 
         {/* Formulario */}
