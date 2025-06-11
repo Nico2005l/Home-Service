@@ -1,5 +1,17 @@
 import React, { useState } from "react";
 
+/*
+Color Palette used in this component:
+
+- Dark Blue (background): #081F41
+- Blue (button, focus ring): #0052CC
+- Teal/Green (button hover, focus ring): #00C6A0
+- White (card background): #FFFFFF
+- Gray (text): #808080, #4B5563 (Tailwind's text-gray-800)
+
+You can adjust or expand this palette as needed for your design.
+*/
+
 const mockUsers = [
   { id: 1, name: "Melissa Peters", email: "mpeters@gmail.com" },
   { id: 2, name: "Martín García", email: "martin@gmail.com" },
@@ -43,72 +55,126 @@ const MenuBackOffice = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold mb-8 text-blue-900">BackOffice</h1>
+    <div className="min-h-screen p-8" style={{ background: "#081F41" }}>
+      <h1 className="text-3xl font-bold mb-8" style={{ color: "#0052CC" }}>
+        BackOffice
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Usuarios */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4 text-blue-800">Usuarios</h2>
+        <div
+          className="rounded-lg shadow p-6"
+          style={{ background: "#FFFFFF" }}
+        >
+          <h2 className="text-xl font-semibold mb-4" style={{ color: "#0052CC" }}>
+            Usuarios
+          </h2>
           <input
             type="text"
             placeholder="Buscar usuario..."
             value={userSearch}
             onChange={(e) => setUserSearch(e.target.value)}
-            className="w-full mb-4 p-2 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="w-full mb-4 p-2 border rounded focus:outline-none"
+            style={{
+              borderColor: "#0052CC",
+              color: "#081F41",
+              background: "#fff",
+              boxShadow: "none",
+            }}
+            onFocus={e => (e.target.style.boxShadow = `0 0 0 2px #00C6A0`)}
+            onBlur={e => (e.target.style.boxShadow = "none")}
           />
           <ul>
             {filteredUsers.map((user) => (
               <li
                 key={user.id}
                 className="flex justify-between items-center py-2 border-b last:border-b-0"
+                style={{ borderColor: "#E5E7EB" }}
               >
                 <div>
-                  <span className="font-medium">{user.name}</span>
-                  <span className="text-gray-500 ml-2 text-sm">{user.email}</span>
+                  <span className="font-medium" style={{ color: "#081F41" }}>
+                    {user.name}
+                  </span>
+                  <span className="ml-2 text-sm" style={{ color: "#808080" }}>
+                    {user.email}
+                  </span>
                 </div>
                 <button
                   onClick={() => handleDeleteUser(user.id)}
-                  className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                  className="px-3 py-1 rounded transition"
+                  style={{
+                    background: "#0052CC",
+                    color: "#fff",
+                  }}
+                  onMouseOver={e => (e.target.style.background = "#00C6A0")}
+                  onMouseOut={e => (e.target.style.background = "#0052CC")}
                 >
                   Dar de baja
                 </button>
               </li>
             ))}
             {filteredUsers.length === 0 && (
-              <li className="text-gray-400 py-2">No se encontraron usuarios.</li>
+              <li className="py-2" style={{ color: "#808080" }}>
+                No se encontraron usuarios.
+              </li>
             )}
           </ul>
         </div>
         {/* Posts */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4 text-blue-800">Posts</h2>
+        <div
+          className="rounded-lg shadow p-6"
+          style={{ background: "#FFFFFF" }}
+        >
+          <h2 className="text-xl font-semibold mb-4" style={{ color: "#0052CC" }}>
+            Posts
+          </h2>
           <input
             type="text"
             placeholder="Buscar post..."
             value={postSearch}
             onChange={(e) => setPostSearch(e.target.value)}
-            className="w-full mb-4 p-2 border border-blue-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="w-full mb-4 p-2 border rounded focus:outline-none"
+            style={{
+              borderColor: "#0052CC",
+              color: "#081F41",
+              background: "#fff",
+              boxShadow: "none",
+            }}
+            onFocus={e => (e.target.style.boxShadow = `0 0 0 2px #00C6A0`)}
+            onBlur={e => (e.target.style.boxShadow = "none")}
           />
           <ul>
             {filteredPosts.map((post) => (
               <li
                 key={post.id}
                 className="flex justify-between items-center py-2 border-b last:border-b-0"
+                style={{ borderColor: "#E5E7EB" }}
               >
                 <div>
-                  <span className="font-medium">{post.title}</span>
-                  <span className="text-gray-500 ml-2 text-sm">{post.author}</span>
+                  <span className="font-medium" style={{ color: "#081F41" }}>
+                    {post.title}
+                  </span>
+                  <span className="ml-2 text-sm" style={{ color: "#808080" }}>
+                    {post.author}
+                  </span>
                 </div>
                 <button
                   onClick={() => handleDeletePost(post.id)}
-                  className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                  className="px-3 py-1 rounded transition"
+                  style={{
+                    background: "#0052CC",
+                    color: "#fff",
+                  }}
+                  onMouseOver={e => (e.target.style.background = "#00C6A0")}
+                  onMouseOut={e => (e.target.style.background = "#0052CC")}
                 >
                   Dar de baja
                 </button>
               </li>
             ))}
             {filteredPosts.length === 0 && (
-              <li className="text-gray-400 py-2">No se encontraron posts.</li>
+              <li className="py-2" style={{ color: "#808080" }}>
+                No se encontraron posts.
+              </li>
             )}
           </ul>
         </div>
