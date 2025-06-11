@@ -15,6 +15,11 @@ const Navbar = () => {
 
     const isAuthenticated = !!localStorage.getItem("token");
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.location.reload();
+    };
+
     return (
         <nav className="bg-[#081F41] p-4 shadow-md sticky top-0 z-50">
             <div className="mx-auto flex justify-between items-center flex-wrap">
@@ -76,6 +81,16 @@ const Navbar = () => {
                                 </button>
                             </Link>
                         </>
+                    )}
+                    {isAuthenticated && (
+                        <button
+                            onClick={handleLogout}
+                            className="px-3 py-1 text-sm rounded-md bg-red-600 text-white 
+                                hover:bg-red-700 hover:scale-105 transition-all duration-300 shadow-md 
+                                focus:outline-none focus:ring-2 focus:ring-red-400"
+                        >
+                            Cerrar sesión
+                        </button>
                     )}
                 </div>
             </div>
