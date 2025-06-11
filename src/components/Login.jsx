@@ -26,6 +26,7 @@ const LoginForm = () => {
       }
       const data = await res.json();
       localStorage.setItem('token', data.token);
+      localStorage.setItem('rol', data.role);
       navigate('/');
     } catch (err) {
       setError(err.message);
