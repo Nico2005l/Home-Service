@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './MisPosteosStyles.css';
 
 const EditarService = () => {
   const [id, setId] = useState('');
@@ -12,31 +13,29 @@ const EditarService = () => {
 
     const response = await fetch(`http://localhost:3000/api/services/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, description, category, price })
     });
 
     const data = await response.json();
-    if (response.ok) {
-      alert(`Servicio actualizado`);
-    } else {
-      alert(`Error: ${data.error}`);
-    }
+    response.ok
+      ? alert(`Servicio actualizado correctamente`)
+      : alert(`Error: ${data.error}`);
   };
 
   return (
-    <div>
-      <h2>Editar Servicio</h2>
-      <form onSubmit={handleUpdate}>
-        <input placeholder="ID del servicio" value={id} onChange={(e) => setId(e.target.value)} />
-        <input placeholder="Nombre" value={name} onChange={(e) => setName(e.target.value)} />
-        <input placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)} />
-        <input placeholder="Categoría" value={category} onChange={(e) => setCategory(e.target.value)} />
-        <input placeholder="Precio" value={price} onChange={(e) => setPrice(e.target.value)} />
-        <button type="submit">Actualizar</button>
-      </form>
+    <div className="container-posteo">
+      <div className="form-box">
+        <h2>Editar Servicio</h2>
+        <form onSubmit={handleUpdate}>
+          <input placeholder="ID del servicio" value={id} onChange={e => setId(e.target.value)} />
+          <input placeholder="Nombre" value={name} onChange={e => setName(e.target.value)} />
+          <input placeholder="Descripción" value={description} onChange={e => setDescription(e.target.value)} />
+          <input placeholder="Categoría" value={category} onChange={e => setCategory(e.target.value)} />
+          <input placeholder="Precio" value={price} onChange={e => setPrice(e.target.value)} />
+          <button type="submit">Actualizar</button>
+        </form>
+      </div>
     </div>
   );
 };
