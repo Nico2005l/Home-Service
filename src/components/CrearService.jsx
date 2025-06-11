@@ -6,7 +6,7 @@ const CreateService = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    title: '',
+    name: '',
     price: '',
     description: '',
     category: ''
@@ -25,13 +25,7 @@ const CreateService = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === 'title' || name === 'category') {
-      if (/\d/.test(value)) return;
-    }
-
-    if (name === 'price') {
-      if (!/^\d*\.?\d*$/.test(value)) return;
-    }
+    if (name === 'price' && !/^\d*\.?\d*$/.test(value)) return;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -63,9 +57,9 @@ const CreateService = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { title, price, description, category } = formData;
+    const { name, price, description, category } = formData;
 
-    if (!title || !price || !description || !category) {
+    if (!name || !price || !description || !category) {
       setSuccessMessage('❌ Todos los campos son obligatorios.');
       return;
     }
@@ -75,7 +69,7 @@ const CreateService = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: title.trim(),
+          name: name.trim(),
           price: parseFloat(price),
           description: description.trim(),
           category: category.trim(),
@@ -87,7 +81,7 @@ const CreateService = () => {
 
       if (response.ok) {
         setSuccessMessage('✅ Servicio creado correctamente.');
-        setFormData({ title: '', price: '', description: '', category: '' });
+        setFormData({ name: '', price: '', description: '', category: '' });
         setImageUrl(null);
       } else {
         setSuccessMessage(`❌ Error: ${data.error}`);
@@ -119,18 +113,21 @@ const CreateService = () => {
               ) : (
                 <span className="text-blue-400">Previsualización</span>
               )}
+
+              {/* Input oculto con label como botón */}
               <input
+                id="imageUpload"
                 type="file"
                 accept="image/*"
                 onChange={handleImageUpload}
-                className="block w-full text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-[#0052CC] file:text-white hover:file:bg-[#00C6A0]"
+                className="hidden"
               />
-              <button
-                type="button"
-                className="absolute top-2 left-2 bg-[#0052CC] text-white text-md px-2 py-1 rounded transition-colors duration-200 hover:bg-[#00C6A0]"
+              <label
+                htmlFor="imageUpload"
+                className="absolute top-2 left-2 bg-[#0052CC] text-white text-md px-2 py-1 rounded cursor-pointer transition-colors duration-200 hover:bg-[#00C6A0]"
               >
                 Elegir Imagen
-              </button>
+              </label>
             </div>
           </div>
 
@@ -140,9 +137,9 @@ const CreateService = () => {
               <label className="text-sm text-blue-950 block mb-1">Título del Servicio</label>
               <input
                 type="text"
-                name="title"
+                name="name"
                 placeholder="Ingrese el Título"
-                value={formData.title}
+                value={formData.name}
                 onChange={handleChange}
                 className="w-full border border-blue-800 rounded px-3 py-2 bg-gray-100 text-blue-950 placeholder:text-grey-400"
               />
@@ -172,16 +169,6 @@ const CreateService = () => {
                 onChange={handleChange}
                 className="w-full border border-blue-800 rounded px-3 py-2 resize-none h-24 bg-gray-100 text-blue-950 placeholder:text-grey-400"
               />
-            </div>
-
-            <div>
-              <label className="text-sm text-blue-950 block mb-1">Imágenes adicionales</label>
-              <button
-                type="button"
-                className="w-full bg-[#0052CC] text-white py-2 rounded transition-colors duration-200 hover:bg-[#00C6A0]"
-              >
-                Cargar Imágenes
-              </button>
             </div>
 
             <div>
