@@ -4,19 +4,23 @@ import Navbar from "./NavBar";
 import { useEffect, useState } from "react";
 
 const Profile = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const isAuthenticated = !!localStorage.getItem("token");
+  const isAuthenticated = !!localStorage.getItem("token");
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        window.location.replace("/");
-    };
+  // Obtener datos del usuario desde localStorage
+  const user = JSON.parse(localStorage.getItem("user")) || {};
 
-if (!isAuthenticated) {
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.replace("/");
+  };
+
+  if (!isAuthenticated) {
     navigate("/login");
     return null; // Evita renderizar el componente si no está autenticado
-}
+  }
 
 const [profile, setProfile] = useState(null);
 
@@ -71,10 +75,10 @@ return (
                 </button>
             </div>
 
-            <div className="flex flex-col space-y-6 w-full max-w-md">
-                <h2 className="text-2xl font-bold text-[#081F41] mb-2 border-b-2 border-blue-200 pb-2">
-                    Mi Perfil
-                </h2>
+        <div className="flex flex-col space-y-6 w-full max-w-md">
+          <h2 className="text-2xl font-bold text-[#081F41] mb-2 border-b-2 border-blue-200 pb-2">
+            Mi Perfil
+          </h2>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center">
                     <label className="font-semibold text-gray-800 w-40">Nombre</label>
@@ -127,8 +131,7 @@ return (
             </div>
         </main>
     </div>
-);
+  );
 };
 
 export default Profile;
-

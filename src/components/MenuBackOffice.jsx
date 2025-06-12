@@ -29,7 +29,13 @@ const MenuBackOffice = () => {
   const [posts, setPosts] = useState(mockPosts);
 
   const handleDeleteUser = (id) => {
+    // Busca el usuario eliminado
+    const deletedUser = users.find((u) => u.id === id);
     setUsers(users.filter((u) => u.id !== id));
+    // Elimina todos los posts de ese usuario
+    if (deletedUser) {
+      setPosts(posts.filter((p) => p.author !== deletedUser.name));
+    }
   };
 
   const handleDeletePost = (id) => {

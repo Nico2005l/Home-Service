@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/NavBar'
@@ -12,18 +11,16 @@ import MenuPosteos from './components/MenuPosteos'
 import Profile from './components/Profile'
 import EditProfile from './components/EditarPerfil'
 import ServiceProfile from './components/ServiceProfile'
-import EditService from './components/EditarService'
+import EditPosts from './components/EditPosts'
+import EditService from './components/EditService'
 import CreateService from './components/CrearService'
-import DeletePosts from './components/DeletePosts'
 import NotFoundPage from './components/NotFound'
 import ReviewPage from './components/ReviewPage'
-import MenuBackOffice from './components/MenuBackOffice'
+import MenuBackOffice from './components/MenuBackOffice' 
 
 function App() {
-
   return (
     <Router>
-      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/registro" element={<Registro />} />
@@ -35,14 +32,15 @@ function App() {
         <Route path="/perfil" element={<Profile />} />
         <Route path="/editar-perfil" element={<EditProfile />} />
         <Route path="/servicio" element={<ServiceProfile />} />
-        <Route path="/editar-post" element={<EditService />} />
+        <Route path="/editar-posts" element={<EditPosts />} />
+        <Route path="/editar-post/:id" element={<EditService />} />
         <Route path="/crear-post" element={<CreateService />} />
-        <Route path="/borrar-post" element={<DeletePosts />} />
         <Route path="/review" element={<ReviewPage />} />
-        <Route path="*" element={<NotFoundPage/>} />
+
         <Route path="/backoffice" element={<MenuBackOffice />} />
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      
     </Router>
   )
 }
