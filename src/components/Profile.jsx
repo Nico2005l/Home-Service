@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./NavBar";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
 const navigate = useNavigate();
@@ -17,13 +18,48 @@ if (!isAuthenticated) {
     return null; // Evita renderizar el componente si no está autenticado
 }
 
+const [profile, setProfile] = useState(null);
+
+useEffect(() => {
+    const fetchProfile = async () => {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        try {
+            const response = await fetch("http://localhost:3000/api/auth/profile", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (response.ok) {
+                const profileData = await response.json();
+                setProfile(profileData);
+            } else {
+                setProfile(null);
+            }
+        } catch (err) {
+            console.error("Error fetching profile:", err);
+            setProfile(null);
+        }
+    };
+    fetchProfile();
+}, []);
+
+if (!profile) {
+    return (
+        <div className="bg-[#081F41] min-h-screen flex items-center justify-center">
+            <Navbar />
+            <div className="text-white text-xl">Cargando perfil...</div>
+        </div>
+    );
+}
+
 return (
     <div className="bg-[#081F41] min-h-screen">
         <Navbar />
         <main className="flex flex-col md:flex-row justify-center items-center w-full max-w-3xl bg-white shadow-xl rounded-2xl p-8 mt-10 mx-auto">
             <div className="flex flex-col items-center md:mr-12 mb-8 md:mb-0">
                 <img
-                    src="profile-picture-url"
+                    src={profile.avatarUrl || "profile-picture-url"}
                     alt="Profile"
                     className="rounded-full w-40 h-40 border-4 border-blue-950 shadow-lg object-cover"
                 />
@@ -44,7 +80,7 @@ return (
                     <label className="font-semibold text-gray-800 w-40">Nombre</label>
                     <input
                         type="text"
-                        value="Melissa Peters"
+                        value={profile.nombre + " " + profile.apellido || ""}
                         readOnly
                         className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
                     />
@@ -54,37 +90,27 @@ return (
                     <label className="font-semibold text-gray-800 w-40">Email</label>
                     <input
                         type="email"
-                        value="mpeters@gmail.com"
+                        value={profile.email || ""}
                         readOnly
                         className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
                     />
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center">
-                    <label className="font-semibold text-gray-800 w-40">Fecha de nacimiento</label>
+                    <label className="font-semibold text-gray-800 w-40">Telefono</label>
                     <input
                         type="text"
-                        value="23/09/1995"
+                        value={profile.telefono || ""}
                         readOnly
                         className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
                     />
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center">
-                    <label className="font-semibold text-gray-800 w-40">Ubicación</label>
+                    <label className="font-semibold text-gray-800 w-40">DNI</label>
                     <input
                         type="text"
-                        value="CABA"
-                        readOnly
-                        className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
-                    />
-                </div>
-
-                <div className="flex flex-col sm:flex-row items-start sm:items-center">
-                    <label className="font-semibold text-gray-800 w-40">Teléfono</label>
-                    <input
-                        type="text"
-                        value="+54 11 5555 1234"
+                        value={profile.dni || ""}
                         readOnly
                         className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
                     />
@@ -98,7 +124,6 @@ return (
                         Cerrar Sesión
                     </button>
                 </div>
-
             </div>
         </main>
     </div>

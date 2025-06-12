@@ -1,26 +1,84 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, use } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from '../components/NavBar';
 
-const EditProfile = () => {
-  const [userData, setUserData] = useState({
-    name: "Melissa Peters",
-    email: "mpeters@gmail.com",
-    birthdate: "23/09/1995",
-    location: "CABA",
-  });
 
+
+
+
+const EditProfile = () => {
+  const [userData, setUserData] = useState();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      try {
+        const response = await fetch("http://localhost:3000/api/auth/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.ok) {
+          const profileData = await response.json();
+          const allowedFields = ["nombre", "apellido", "telefono"];
+          const filteredProfileData = Object.fromEntries(
+            Object.entries(profileData).filter(([key]) => allowedFields.includes(key))
+          );
+          setUserData(filteredProfileData);
+        } else {
+          setUserData(null);
+        }
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+        setUserData(null);
+      }
+      return response.json();
   };
+    fetchUserData();
 
-  const handleSubmit = (e) => {
+  }, []);
+  if (!userData) {
+    return <div>Cargando...</div>;
+  }
+
+  const isAuthenticated = !!localStorage.getItem("token");
+  if (!isAuthenticated) {
+    window.location.replace("/login");
+    return null; // Evita renderizar el componente si no está autenticado
+  }
+
+
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos guardados:", userData);
-    navigate("/perfil");
+    try {
+      // Cambia la URL por la de tu API real
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      const response = await fetch("http://localhost:3000/api/auth/edit", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(data),
+      });
 
+      if (!response.ok) {
+        throw new Error("Error al actualizar el perfil");
+      }
+
+      navigate("/perfil");
+    } catch (err) {
+      setError(err.message || "Error desconocido");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -38,17 +96,21 @@ const EditProfile = () => {
                 <input
                   type={key === "email" ? "email" : "text"}
                   name={key}
-                  value={value}
-                  onChange={handleChange}
+                  placeholder={value}
                   className="p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-gray-800"
+                  disabled={loading}
                 />
               </div>
             ))}
+            {error && (
+              <div className="text-red-600 text-sm">{error}</div>
+            )}
             <button
               type="submit"
               className="mt-4 w-full py-2 bg-[#0052CC] text-white font-semibold rounded-lg shadow hover:bg-[#00C6A0] transition-colors duration-200"
+              disabled={loading}
             >
-              Guardar Cambios
+              {loading ? "Guardando..." : "Guardar Cambios"}
             </button>
           </form>
         </div>
