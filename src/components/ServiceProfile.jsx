@@ -1,45 +1,25 @@
 import React from "react";
 import Navbar from "./NavBar";
+import { useState, useEffect, us } from "react";
+import { useParams } from "react-router-dom";
 
-const reviews = [
-  {
-    stars: 5,
-    title: "Excelente",
-    body: "Muy buen servicio, recomendado al 100%",
-    user: "María Gimenez",
-    date: "15/7/24",
-  },
-  {
-    stars: 5,
-    title: "Buena atención",
-    body: "",
-    user: "Natalia Cordero",
-    date: "Date",
-  },
-  {
-    stars: 5,
-    title: "Excelente",
-    body: "Muy buen servicio, recomendado al 100%",
-    user: "Marcela Gomez",
-    date: "18/9/24",
-  },
-  {
-    stars: 4,
-    title: "Muy bueno",
-    body: "Me atendió muy bien",
-    user: "Martín García",
-    date: "9/12/24",
-  },
-  {
-    stars: 3,
-    title: "Review title",
-    body: "Review body",
-    user: "Gerardo Rey",
-    date: "13/4/25",
-  },
-];
+
 
 const ServiceProfile = () => {
+  const [service, setService] = useState(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchService = async () => {
+      const response = await fetch(`http://localhost:3000/api/services/${id}`);
+      const data = await response.json();
+      setService(data);
+    };
+    fetchService();
+  }, [id]);
+
+  if (!service) return <div>Cargando...</div>;
+
   return (
     <div className="bg-[#081F41] min-h-screen">
       <Navbar />

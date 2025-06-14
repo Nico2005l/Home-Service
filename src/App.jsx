@@ -31,11 +31,11 @@ function App() {
         <Route path="/posteos" element={<MenuPosteos />} />
         <Route path="/perfil" element={<Profile />} />
         <Route path="/editar-perfil" element={<EditProfile />} />
-        <Route path="/servicio" element={<ServiceProfile />} />
+        <Route path="/servicio/:id" element={<ServiceProfile />} />
         <Route path="/editar-posts" element={<EditPosts />} />
         <Route path="/editar-post/:id" element={<EditService />} />
         <Route path="/crear-post" element={<CreateService />} />
-        <Route path="/review" element={<ReviewPage />} />
+        <Route path="/review/:id" element={<ReviewPage />} />
 
         <Route path="/backoffice" element={<MenuBackOffice />} />
 

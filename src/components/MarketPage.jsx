@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar'; // Ajusta la ruta si es necesario
 
 const MarketPage = () => {
-  const services = [
-    { title: "Tutoria", price: "$15000", image: "/media/Julioprofe_1.jpg" },
-    { title: "Mantenimiento de aire acondicionado", price: "$19500", image: "/media/mantenimiento-aire-acondicionado.jpg" },
-    { title: "Electricista", price: "$10000", image: "/media/electricista.png" },
-    { title: "Fumigador", price: "$6500", image: "/media/Fumigador.jpg" },
-    { title: "Limpieza a domicilio", price: "$10000", image: '/media/servicio-limpieza-domicilio.jpg' },
-    { title: "Gasista", price: "$15000", image: '/media/gasista.jpg' },
-    { title: "Tutoria", price: "$15000", image: "/media/Julioprofe_1.jpg" },
-    { title: "Mantenimiento de aire acondicionado", price: "$19500", image: "/media/mantenimiento-aire-acondicionado.jpg" },
-    { title: "Electricista", price: "$10000", image: "/media/electricista.png" },
-    { title: "Fumigador", price: "$6500", image: "/media/Fumigador.jpg" },
-    { title: "Limpieza a domicilio", price: "$10000", image: '/media/servicio-limpieza-domicilio.jpg' },
-    { title: "Gasista", price: "$15000", image: '/media/gasista.jpg' },
-  ];
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    // Simulación de carga de servicios
+    const fetchServices = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/services/');
+        if (!response.ok) throw new Error('Error al cargar los servicios');
+        const data = await response.json();
+        setServices(data);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+      }
+    };
+    fetchServices();
+  }, []);
 
   return (
     <div className="bg-[#081F41] min-h-screen">
@@ -84,11 +86,11 @@ const MarketPage = () => {
             {/* Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {services.map((s, i) => (
-                <Link to={`/servicio`} key={i} className="block">
+                <Link to={`/servicio/${s.id}`} key={i} className="block">
                   <div className="border border-blue-800 rounded p-2 bg-white hover:shadow-lg transition">
                     <div className="h-40 bg-gray-100 rounded mb-2 overflow-hidden flex items-center justify-center">
                       {/* Reemplazar por una imagen real si se desea */}
-                      <img src={s.image} alt={s.title} className="h-full w-full object-cover" />
+                      <img src={s.images[0]} alt={s.title} className="h-full w-full object-cover" />
                     </div>
                     <h3 className="text-sm font-medium text-blue-950">{s.title}</h3>
                     <p className="text-sm font-semibold text-blue-800">{s.price}</p>
