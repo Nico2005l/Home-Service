@@ -157,7 +157,7 @@ const MarketPage = () => {
                 <Link to={`/servicio/${s.id}`} key={i} className="block">
                   <div className="border border-blue-800 rounded p-2 bg-white hover:shadow-lg transition">
                     <div className="h-64 bg-gray-100 rounded mb-2 overflow-hidden flex items-center justify-center"> {/* h-64 for bigger images */}
-                      <img src={s.images?.[0]} alt={s.name} className="h-full w-full object-scale-down" />
+                      <img src={s.images && s.images[0] ? s.images[0] : "/media/placeholder1.webp"} alt={s.name} className="h-full w-full object-scale-down" />
                     </div>
                     <h3 className="text-md font-medium text-blue-950">{s.name}</h3>
                     <p className="text-sm font-semibold text-blue-800">${s.price}</p>
