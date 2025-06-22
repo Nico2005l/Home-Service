@@ -41,36 +41,47 @@ const ServiceProfile = () => {
     <div className="bg-[#081F41] min-h-screen">
       <Navbar />
       {/* Perfil */}
-      <div className="bg-white rounded-lg shadow-md p-6 space-y-4 m-4 mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-          <img
-            src={service.images || "https://example.com/default-image.jpg"}
-            alt="image"
-            className="w-48 mx-auto rounded-lg shadow-md border-4 border-blue-800 scale-3d"
-          />
-          <div className="space-y-2">
-            <h2 className="text-blue-950 text-3xl capitalize">{service.name}</h2>
-            <hr />
-            <span className="bg-[#00C6A0] text-white text-xs capitalize font-semibold px-2 py-1 rounded">
-              {service.category}
-            </span>
-            <p className="text-5xl font-bold mt-2 text-blue-950">${service.price}</p>
-            <p className="text-sm text-gray-400">
-              {service.description}
-            </p>
-            <button className="mt-4 w-full bg-[#0052CC] text-white py-2 px-4 rounded hover:bg-[#00C6A0] transition">
-              Contratar
-            </button>
-          </div>
-        </div>
-
-        
-        <div className="mt-6">
+        <div className="bg-white rounded-lg shadow-md p-6 space-y-4 m-4 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <img
+          src={
+            Array.isArray(service.images) && service.images.length > 0
+              ? service.images[0]
+              : "/media/placeholder1.webp"
+          }
+          alt="image"
+          className="w-48 mx-auto rounded-lg shadow-md border-4 border-blue-800 scale-3d"
+            />
+            <div className="space-y-2">
+          <h2 className="text-blue-950 text-3xl capitalize">{service.name}</h2>
           <hr />
-        </div>
-        
+          <span className="bg-[#00C6A0] text-white text-xs capitalize font-semibold px-2 py-1 rounded">
+            {service.category}
+          </span>
+          <p className="text-5xl font-bold mt-2 text-blue-950">${service.price}</p>
+          <p className="text-sm text-gray-400">
+            {service.description}
+          </p>
+          <button
+            className="mt-4 w-full bg-[#0052CC] text-white py-2 px-4 rounded hover:bg-[#00C6A0] transition"
+            onClick={() => {
+              if (window.confirm("¿Deseas contratar este servicio? Se enviará tu información de contacto al proveedor.")) {
+            window.alert("¡Listo! Se le envió tu información de contacto al mail del proveedor.");
+              }
+            }}
+          >
+            Contratar
+          </button>
+            </div>
+          </div>
 
-        {/* Reseñas */}
+          
+          <div className="mt-6">
+            <hr />
+          </div>
+          
+
+          {/* Reseñas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {reviews.map((review, index) => (
             <div key={review.id || index} className="bg-white border border-blue-800 rounded-lg p-4 shadow-sm">

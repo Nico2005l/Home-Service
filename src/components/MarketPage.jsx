@@ -65,9 +65,9 @@ const MarketPage = () => {
       <h1 className="text-3xl font-semibold text-white p-6 mt-2">Mercado</h1>
 
       {/* Main content */}
-      <div className="flex flex-col lg:flex-row gap-4 px-6 py-6">
+      <div className="flex flex-col lg:flex-row gap-4 px-2 sm:px-4 md:px-6 py-4 md:py-6">
         {/* Filtros */}
-        <aside className="w-full lg:w-64 space-y-4 text-sm">
+        <aside className="w-full lg:w-64 space-y-4 text-sm mb-4 lg:mb-0">
           <div className="border border-blue-800 rounded p-4 bg-white">
             <h2 className="font-semibold mb-2 text-blue-950">Categorías</h2>
             <div className="flex flex-wrap gap-2">
@@ -114,7 +114,7 @@ const MarketPage = () => {
                     if (val < 0) val = 0;
                     setPriceRange(val);
                   }}
-                  className="w-24 border border-blue-800 rounded px-2 py-1 text-blue-950"
+                  className="w-20 sm:w-24 border border-blue-800 rounded px-2 py-1 text-blue-950"
                   disabled={!usePriceFilter}
                 />
               </div>
@@ -127,9 +127,9 @@ const MarketPage = () => {
 
         {/* Productos */}
         <main className="flex-1">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex justify-between items-center mb-4">
-              <div className="relative w-72">
+          <div className="bg-white rounded-lg shadow p-4 sm:p-6">
+            <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center mb-4 gap-2">
+              <div className="relative w-full md:w-72 mb-2 md:mb-0">
                 <input
                   type="text"
                   placeholder="Buscar servicios..."
@@ -139,14 +139,13 @@ const MarketPage = () => {
                 />
                 <span className="absolute right-3 top-2.5 text-blue-800">🔍</span>
               </div>
-              <div className="flex gap-2 text-sm">
+              <div className="flex flex-wrap gap-2 text-sm">
                 <button
                   className={`px-3 py-1 rounded border border-blue-800 ${order === 'nuevo' ? 'bg-[#0052CC] text-white' : 'bg-white text-blue-800'} hover:bg-[#00C6A0] hover:text-white`}
                   onClick={() => setOrder('nuevo')}
                 >
                   Más recientes
                 </button>
-              
                 <button
                   className={`px-3 py-1 rounded border border-blue-800 ${order === 'asc' ? 'bg-[#0052CC] text-white' : 'bg-white text-blue-800'} hover:bg-[#00C6A0] hover:text-white`}
                   onClick={() => setOrder('asc')}
@@ -166,8 +165,8 @@ const MarketPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filtered.map((s, i) => (
                 <Link to={`/servicio/${s.id}`} key={i} className="block">
-                  <div className="border border-blue-800 rounded p-2 bg-white hover:shadow-lg transition">
-                    <div className="h-64 bg-gray-100 rounded mb-2 overflow-hidden flex items-center justify-center"> {/* h-64 for bigger images */}
+                  <div className="border border-blue-800 rounded p-2 bg-white hover:shadow-lg transition h-full flex flex-col">
+                    <div className="h-48 sm:h-56 md:h-64 bg-gray-100 rounded mb-2 overflow-hidden flex items-center justify-center">
                       <img src={s.images && s.images[0] ? s.images[0] : "/media/placeholder1.webp"} alt={s.name} className="h-full w-full object-scale-down" />
                     </div>
                     <h3 className="text-md font-medium text-blue-950">{s.name}</h3>

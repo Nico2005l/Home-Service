@@ -155,6 +155,23 @@ const EditService = () => {
           </div>
 
           <div>
+            <label className="text-sm text-blue-950 block mb-1">Tipo de Servicio</label>
+            <select
+              name="category"
+              value={post.category}
+              onChange={handleChange}
+              className="w-full border border-blue-800 rounded px-3 py-2 bg-gray-100 text-blue-950"
+            >
+              <option value="">Seleccione un tipo</option>
+              <option value="plomeria">Plomería</option>
+              <option value="electricista">Electricista</option>
+              <option value="limpieza">Limpieza</option>
+              <option value="jardineria">Jardinería</option>
+              <option value="otros">Otros</option>
+            </select>
+          </div>
+
+          <div>
             <label className="text-blue-950 font-semibold">Precio</label>
             <input
               name="price"
@@ -176,22 +193,7 @@ const EditService = () => {
             />
           </div>
 
-          <div>
-            <label className="text-sm text-blue-950 block mb-1">Tipo de Servicio</label>
-            <select
-              name="category"
-              value={post.category}
-              onChange={handleChange}
-              className="w-full border border-blue-800 rounded px-3 py-2 bg-gray-100 text-blue-950"
-            >
-              <option value="">Seleccione un tipo</option>
-              <option value="plomeria">Plomería</option>
-              <option value="electricista">Electricista</option>
-              <option value="limpieza">Limpieza</option>
-              <option value="jardineria">Jardinería</option>
-              <option value="otros">Otros</option>
-            </select>
-          </div>
+          
 
           <div className="pt-4">
             <button

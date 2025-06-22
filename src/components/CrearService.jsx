@@ -102,14 +102,20 @@ const CreateService = () => {
         </div>
       )}
 
-      <div className="bg-white p-6 rounded-lg shadow-md m-6 mt-3 mb-0">
-        <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-8 items-start">
-
+      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md m-2 sm:m-6 mt-3 mb-0">
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-start"
+        >
           {/* Imagen principal */}
           <div className="space-y-4">
             <div className="relative w-full aspect-square bg-blue-950 rounded-md flex items-center justify-center border border-blue-800">
               {imageUrl ? (
-                <img src={imageUrl} alt="preview" className="w-full h-full object-cover rounded-md" />
+                <img
+                  src={imageUrl}
+                  alt="preview"
+                  className="w-full h-full object-cover rounded-md"
+                />
               ) : (
                 <span className="text-blue-400">Previsualización</span>
               )}
@@ -134,7 +140,9 @@ const CreateService = () => {
           {/* Formulario */}
           <div className="space-y-4">
             <div>
-              <label className="text-sm text-blue-950 block mb-1">Título del Servicio</label>
+              <label className="text-sm text-blue-950 block mb-1">
+                Título del Servicio
+              </label>
               <input
                 type="text"
                 name="name"
@@ -146,33 +154,9 @@ const CreateService = () => {
             </div>
 
             <div>
-              <label className="text-sm text-blue-950 block mb-1">Precio</label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-800">$</span>
-                <input
-                  type="text"
-                  name="price"
-                  placeholder="Ingrese el Precio"
-                  value={formData.price}
-                  onChange={handleChange}
-                  className="w-full pl-6 border border-blue-800 rounded px-3 py-2 bg-gray-100 text-blue-950 placeholder:text-grey-400"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="text-sm text-blue-950 block mb-1">Descripción</label>
-              <textarea
-                name="description"
-                placeholder="Ingrese la Descripción"
-                value={formData.description}
-                onChange={handleChange}
-                className="w-full border border-blue-800 rounded px-3 py-2 resize-none h-24 bg-gray-100 text-blue-950 placeholder:text-grey-400"
-              />
-            </div>
-
-            <div>
-              <label className="text-sm text-blue-950 block mb-1">Tipo de Servicio</label>
+              <label className="text-sm text-blue-950 block mb-1">
+                Tipo de Servicio
+              </label>
               <select
                 name="category"
                 value={formData.category}
@@ -187,6 +171,38 @@ const CreateService = () => {
                 <option value="otros">Otros</option>
               </select>
             </div>
+
+            <div>
+              <label className="text-sm text-blue-950 block mb-1">Precio</label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-800">
+                  $
+                </span>
+                <input
+                  type="text"
+                  name="price"
+                  placeholder="Ingrese el Precio"
+                  value={formData.price}
+                  onChange={handleChange}
+                  className="w-full pl-6 border border-blue-800 rounded px-3 py-2 bg-gray-100 text-blue-950 placeholder:text-grey-400"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm text-blue-950 block mb-1">
+                Descripción
+              </label>
+              <textarea
+                name="description"
+                placeholder="Ingrese la Descripción"
+                value={formData.description}
+                onChange={handleChange}
+                className="w-full border border-blue-800 rounded px-3 py-2 resize-none h-24 bg-gray-100 text-blue-950 placeholder:text-grey-400"
+              />
+            </div>
+
+            
 
             <div className="pt-4">
               <button
