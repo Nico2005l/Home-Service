@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/NavBar';
 import { ArrowLeft } from 'lucide-react';
 
+const CATEGORIES = ["plomeria", "electricista", "limpieza", "jardineria", "otros"];
+
 const EditService = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -177,12 +179,17 @@ const EditService = () => {
 
           <div>
             <label className="text-blue-950 font-semibold">Tipo de Servicio</label>
-            <input
+            <select
               name="category"
               value={post.category}
               onChange={handleChange}
               className="w-full border border-blue-800 rounded px-3 py-2 bg-gray-100 text-blue-950"
-            />
+            >
+              <option value="">Selecciona una categoría</option>
+              {CATEGORIES.map(cat => (
+                <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
+              ))}
+            </select>
           </div>
 
           <div className="pt-4">
