@@ -115,7 +115,6 @@ const EditService = () => {
       <div className="grid md:grid-cols-2 gap-8 items-start p-6">
         {/* Imagen actual con botón para cambiar */}
         <div className="space-y-4">
-          <label className="text-white block mb-1">Imágenes del Servicio</label>
           <div className="relative w-full aspect-square bg-gray-200 rounded-md flex items-center justify-center overflow-hidden border border-blue-800">
             {imagePreview ? (
               <img src={imagePreview} alt="preview" className="w-full h-full object-cover" />
@@ -176,13 +175,20 @@ const EditService = () => {
           </div>
 
           <div>
-            <label className="text-blue-950 font-semibold">Tipo de Servicio</label>
-            <input
+            <label className="text-sm text-blue-950 block mb-1">Tipo de Servicio</label>
+            <select
               name="category"
               value={post.category}
               onChange={handleChange}
               className="w-full border border-blue-800 rounded px-3 py-2 bg-gray-100 text-blue-950"
-            />
+            >
+              <option value="">Seleccione un tipo</option>
+              <option value="plomeria">Plomería</option>
+              <option value="electricista">Electricista</option>
+              <option value="limpieza">Limpieza</option>
+              <option value="jardineria">Jardinería</option>
+              <option value="otros">Otros</option>
+            </select>
           </div>
 
           <div className="pt-4">
