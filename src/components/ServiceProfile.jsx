@@ -7,15 +7,31 @@ import { useParams } from "react-router-dom";
 
 const ServiceProfile = () => {
   const [service, setService] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
+
+    const reviews = async () => {
+      const response = await fetch(`http://localhost:3000/api/reviews/service/${id}`);
+      const data = await response.json();
+      setReviews(data);
+    };
+    reviews();
+
     const fetchService = async () => {
       const response = await fetch(`http://localhost:3000/api/services/${id}`);
       const data = await response.json();
+
+      console.log("Service data:", data.images);
+
       setService(data);
     };
     fetchService();
+    setLoading(false);
+
+
   }, [id]);
 
   if (!service) return <div>Cargando...</div>;
@@ -27,18 +43,19 @@ const ServiceProfile = () => {
       <div className="bg-white rounded-lg shadow-md p-6 space-y-4 m-4 mt-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
           <img
-            src="/media/OIP.jpg"
-            alt="Mario"
+            src={service.images || "https://example.com/default-image.jpg"}
+            alt="image"
             className="w-48 mx-auto rounded-lg shadow-md border-4 border-blue-800 scale-3d"
           />
           <div className="space-y-2">
-            <h2 className="text-blue-950 text-3xl">Plomero</h2>
-            <span className="bg-[#00C6A0] text-white text-xs font-semibold px-2 py-1 rounded">
-              Consulta
+            <h2 className="text-blue-950 text-3xl capitalize">{service.name}</h2>
+            <hr />
+            <span className="bg-[#00C6A0] text-white text-xs capitalize font-semibold px-2 py-1 rounded">
+              {service.category}
             </span>
-            <p className="text-5xl font-bold mt-2 text-blue-950">$20000</p>
+            <p className="text-5xl font-bold mt-2 text-blue-950">${service.price}</p>
             <p className="text-sm text-gray-400">
-              Plomero con 10 años de experiencia con buena disponibilidad y atención
+              {service.description}
             </p>
             <button className="mt-4 w-full bg-[#0052CC] text-white py-2 px-4 rounded hover:bg-[#00C6A0] transition">
               Contratar
