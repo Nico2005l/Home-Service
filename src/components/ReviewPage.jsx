@@ -77,7 +77,7 @@ const ReviewPage = () => {
             return response.json();
         })
         .then(() => {
-            alert('Reseña enviada con éxito');
+            window.location.replace('/servicio/'+ window.location.pathname.split('/').pop()); // Redirige al usuario a la página principal después de enviar la reseña
             setRating(0);
             setComment('');
         })
