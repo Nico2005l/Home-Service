@@ -27,15 +27,19 @@ const MarketPage = () => {
   }, []);
 
   // Filtros
-  let filtered = services
-    .filter(s =>
-      (selectedCategories.length === 0 || selectedCategories.includes(s.category)) &&
-      (!usePriceFilter || s.price <= priceRange) &&
-      (
-        s.name.toLowerCase().includes(search.toLowerCase()) ||
-        (s.description && s.description.toLowerCase().includes(search.toLowerCase()))
-      )
-    );
+  let filtered = services.filter(s => {
+    // Si no hay categorías seleccionadas, mostrar todos
+    if (selectedCategories.length === 0) return true;
+    // Si hay seleccionadas, mostrar solo las que coinciden exactamente
+    return selectedCategories.includes(s.category);
+  })
+  .filter(s =>
+    (!usePriceFilter || s.price <= priceRange) &&
+    (
+      s.name.toLowerCase().includes(search.toLowerCase()) ||
+      (s.description && s.description.toLowerCase().includes(search.toLowerCase()))
+    )
+  );
 
   // Ordenamiento
   if (order === 'asc') {
