@@ -65,7 +65,9 @@ const ServiceProfile = () => {
         </div>
 
         
-
+        <div className="mt-6">
+          <hr />
+        </div>
         
 
         {/* Reseñas */}
@@ -81,7 +83,7 @@ const ServiceProfile = () => {
                   <span key={i + 10} className="text-gray-300">★</span>
                 ))}
               </div>
-              <h3 className="font-semibold text-blue-950">Usuario Anonimo</h3>
+              <h3 className="font-semibold text-blue-950">Usuario Anónimo</h3>
               <p className="text-sm text-gray-400">{review.comment}</p>
               <div className="mt-3 text-xs text-gray-500">
                 <p>{new Date(review.created_at).toLocaleDateString()}</p>
