@@ -141,7 +141,7 @@ const MarketPage = () => {
               {filtered.map((s, i) => (
                 <Link to={`/servicio/${s.id}`} key={i} className="block">
                   <div className="border border-blue-800 rounded p-2 bg-white hover:shadow-lg transition">
-                    <div className="h-40 bg-gray-100 rounded mb-2 overflow-hidden flex items-center justify-center">
+                    <div className="h-64 bg-gray-100 rounded mb-2 overflow-hidden flex items-center justify-center"> {/* h-64 for bigger images */}
                       <img src={s.images?.[0]} alt={s.name} className="h-full w-full object-cover" />
                     </div>
                     <h3 className="text-sm font-medium text-blue-950">{s.name}</h3>
