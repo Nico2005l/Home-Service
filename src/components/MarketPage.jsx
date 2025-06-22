@@ -1,12 +1,17 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import NavBar from '../components/NavBar'; // Ajusta la ruta si es necesario
+import NavBar from '../components/NavBar';
+
+const CATEGORIES = ["Plomería", "Electricista", "Limpieza"];
 
 const MarketPage = () => {
   const [services, setServices] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [priceRange, setPriceRange] = useState(250000);
+  const [usePriceFilter, setUsePriceFilter] = useState(false);
+  const [order, setOrder] = useState('nuevo'); // 'nuevo', 'asc', 'desc'
 
   useEffect(() => {
-    // Simulación de carga de servicios
     const fetchServices = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/services/');
@@ -19,6 +24,29 @@ const MarketPage = () => {
     };
     fetchServices();
   }, []);
+
+  // Filtros
+  let filtered = services
+    .filter(s =>
+      (selectedCategories.length === 0 || selectedCategories.includes(s.category)) &&
+      (!usePriceFilter || s.price <= priceRange)
+    );
+
+  // Ordenamiento
+  if (order === 'asc') {
+    filtered = filtered.sort((a, b) => a.price - b.price);
+  } else if (order === 'desc') {
+    filtered = filtered.sort((a, b) => b.price - a.price);
+  } else if (order === 'nuevo') {
+    filtered = filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  }
+
+  // Handlers
+  const handleCategoryChange = (cat) => {
+    setSelectedCategories(prev =>
+      prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
+    );
+  };
 
   return (
     <div className="bg-[#081F41] min-h-screen">
@@ -34,31 +62,56 @@ const MarketPage = () => {
           <div className="border border-blue-800 rounded p-4 bg-white">
             <h2 className="font-semibold mb-2 text-blue-950">Categorías</h2>
             <div className="flex flex-wrap gap-2">
-              <span className="bg-blue-800 text-white px-2 py-1 rounded">Plomería ✕</span>
-              <span className="bg-blue-800 text-white px-2 py-1 rounded">Electricista ✕</span>
-              <span className="bg-blue-800 text-white px-2 py-1 rounded">Limpieza ✕</span>
+              {CATEGORIES.map(cat => (
+                <label key={cat} className="flex items-center gap-1 text-blue-950">
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(cat)}
+                    onChange={() => handleCategoryChange(cat)}
+                  />
+                  {cat}
+                </label>
+              ))}
             </div>
-            <div className="mt-4 space-y-2">
-              <label className="block text-blue-950"><input type="checkbox" defaultChecked /> Verificado</label>
-              <label className="block text-blue-950"><input type="checkbox" defaultChecked /> Destacado</label>
-              <label className="block text-blue-950"><input type="checkbox" defaultChecked /> Descuento</label>
-            </div>
+
+            {/* Filtro de precio */}
             <div className="mt-4">
-              <label className="block text-xs font-semibold mb-1 text-blue-950">Precio</label>
-              <input type="range" min="0" max="30000" defaultValue="30000" className="w-full accent-[#00C6A0]" />
-              <div className="text-xs mt-1 text-blue-950">$0–30000</div>
-            </div>
-            <div className="mt-4 space-y-2">
-              <p className="font-semibold text-xs text-blue-950">Zona</p>
-              <label className="block text-blue-950"><input type="checkbox" defaultChecked /> Recoleta</label>
-              <label className="block text-blue-950"><input type="checkbox" defaultChecked /> Caballito</label>
-              <label className="block text-blue-950"><input type="checkbox" defaultChecked /> Puerto Madero</label>
-            </div>
-            <div className="mt-4 space-y-2">
-              <p className="font-semibold text-xs text-blue-950">Medios de pago</p>
-              <label className="block text-blue-950"><input type="checkbox" defaultChecked /> Efectivo</label>
-              <label className="block text-blue-950"><input type="checkbox" defaultChecked /> Débito</label>
-              <label className="block text-blue-950"><input type="checkbox" defaultChecked /> Crédito</label>
+              <label className="block text-xs font-semibold mb-1 text-blue-950 flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={usePriceFilter}
+                  onChange={() => setUsePriceFilter(v => !v)}
+                />
+                Usar filtro de precio máximo
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="range"
+                  min="0"
+                  max="250000"
+                  value={priceRange}
+                  onChange={e => setPriceRange(Number(e.target.value))}
+                  className="w-full accent-[#00C6A0]"
+                  disabled={!usePriceFilter}
+                />
+                <input
+                  type="number"
+                  min="0"
+                  max="250000"
+                  value={priceRange}
+                  onChange={e => {
+                    let val = Number(e.target.value);
+                    if (val > 250000) val = 250000;
+                    if (val < 0) val = 0;
+                    setPriceRange(val);
+                  }}
+                  className="w-24 border border-blue-800 rounded px-2 py-1 text-blue-950"
+                  disabled={!usePriceFilter}
+                />
+              </div>
+              <div className={`text-xs mt-1 ${usePriceFilter ? "text-blue-950" : "text-gray-400"}`}>
+                ${priceRange}
+              </div>
             </div>
           </div>
         </aside>
@@ -67,46 +120,38 @@ const MarketPage = () => {
         <main className="flex-1">
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex justify-between items-center mb-4">
-              <div className="relative w-72">
-                <input
-                  type="text"
-                  placeholder="Buscador"
-                  className="w-full border border-blue-800 rounded px-4 py-2 bg-gray-100 text-blue-950 placeholder:text-gray-400"
-                />
-                <span className="absolute right-3 top-2.5 text-blue-800">🔍</span>
-              </div>
               <div className="flex gap-2 text-sm">
-                <button className="bg-[#0052CC] text-white px-3 py-1 rounded font-semibold hover:bg-[#00C6A0] hover:text-white">Nuevo</button>
-                <button className="px-3 py-1 rounded border border-blue-800 text-white bg-[#0052CC] hover:bg-[#00C6A0] hover:text-white">Precio ascendente</button>
-                <button className="px-3 py-1 rounded border border-blue-800 text-white bg-[#0052CC] hover:bg-[#00C6A0] hover:text-white">Precio descendente</button>
-                <button className="px-3 py-1 rounded border border-blue-800 text-white bg-[#0052CC] hover:bg-[#00C6A0] hover:text-white">Puntaje</button>
+                <button
+                  className={`px-3 py-1 rounded border border-blue-800 ${order === 'asc' ? 'bg-[#0052CC] text-white' : 'bg-white text-blue-800'} hover:bg-[#00C6A0] hover:text-white`}
+                  onClick={() => setOrder('asc')}
+                >
+                  Precio ascendente
+                </button>
+                <button
+                  className={`px-3 py-1 rounded border border-blue-800 ${order === 'desc' ? 'bg-[#0052CC] text-white' : 'bg-white text-blue-800'} hover:bg-[#00C6A0] hover:text-white`}
+                  onClick={() => setOrder('desc')}
+                >
+                  Precio descendente
+                </button>
               </div>
             </div>
 
             {/* Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {services.map((s, i) => (
+              {filtered.map((s, i) => (
                 <Link to={`/servicio/${s.id}`} key={i} className="block">
                   <div className="border border-blue-800 rounded p-2 bg-white hover:shadow-lg transition">
                     <div className="h-40 bg-gray-100 rounded mb-2 overflow-hidden flex items-center justify-center">
-                      {/* Reemplazar por una imagen real si se desea */}
-                      <img src={s.images[0]} alt={s.title} className="h-full w-full object-cover" />
+                      <img src={s.images?.[0]} alt={s.name} className="h-full w-full object-cover" />
                     </div>
-                    <h3 className="text-sm font-medium text-blue-950">{s.title}</h3>
-                    <p className="text-sm font-semibold text-blue-800">{s.price}</p>
+                    <h3 className="text-sm font-medium text-blue-950">{s.name}</h3>
+                    <p className="text-sm font-semibold text-blue-800">${s.price}</p>
                   </div>
                 </Link>
               ))}
-            </div>
-
-            {/* Paginación */}
-            <div className="mt-8 flex justify-center items-center gap-2 text-sm">
-              <button className="px-2 py-1 rounded bg-[#0052CC] text-white font-bold hover:bg-[#00C6A0] hover:text-white">1</button>
-              <button className="text-white bg-[#0052CC] border border-blue-800 hover:bg-[#00C6A0] hover:text-white px-2 py-1 rounded">2</button>
-              <button className="text-white bg-[#0052CC] border border-blue-800 hover:bg-[#00C6A0] hover:text-white px-2 py-1 rounded">3</button>
-              <span className="text-blue-950">...</span>
-              <button className="text-white bg-[#0052CC] border border-blue-800 hover:bg-[#00C6A0] hover:text-white px-2 py-1 rounded">67</button>
-              <button className="text-white bg-[#0052CC] border border-blue-800 hover:bg-[#00C6A0] hover:text-white px-2 py-1 rounded">68</button>
+              {filtered.length === 0 && (
+                <div className="col-span-full text-center text-blue-950 py-8">No se encontraron servicios.</div>
+              )}
             </div>
           </div>
         </main>
