@@ -10,6 +10,7 @@ const MarketPage = () => {
   const [priceRange, setPriceRange] = useState(250000);
   const [usePriceFilter, setUsePriceFilter] = useState(false);
   const [order, setOrder] = useState('nuevo'); // 'nuevo', 'asc', 'desc'
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -29,7 +30,11 @@ const MarketPage = () => {
   let filtered = services
     .filter(s =>
       (selectedCategories.length === 0 || selectedCategories.includes(s.category)) &&
-      (!usePriceFilter || s.price <= priceRange)
+      (!usePriceFilter || s.price <= priceRange) &&
+      (
+        s.name.toLowerCase().includes(search.toLowerCase()) ||
+        (s.description && s.description.toLowerCase().includes(search.toLowerCase()))
+      )
     );
 
   // Ordenamiento
@@ -120,6 +125,16 @@ const MarketPage = () => {
         <main className="flex-1">
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex justify-between items-center mb-4">
+              <div className="relative w-72">
+                <input
+                  type="text"
+                  placeholder="Buscar servicios..."
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  className="w-full border border-blue-800 rounded px-4 py-2 bg-gray-100 text-blue-950 placeholder:text-gray-400"
+                />
+                <span className="absolute right-3 top-2.5 text-blue-800">🔍</span>
+              </div>
               <div className="flex gap-2 text-sm">
                 <button
                   className={`px-3 py-1 rounded border border-blue-800 ${order === 'asc' ? 'bg-[#0052CC] text-white' : 'bg-white text-blue-800'} hover:bg-[#00C6A0] hover:text-white`}
