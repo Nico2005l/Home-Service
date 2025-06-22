@@ -25,11 +25,7 @@ const EditProfile = () => {
         });
         if (response.ok) {
           const profileData = await response.json();
-          const allowedFields = ["nombre", "apellido", "telefono"];
-          const filteredProfileData = Object.fromEntries(
-            Object.entries(profileData).filter(([key]) => allowedFields.includes(key))
-          );
-          setUserData(filteredProfileData);
+          setUserData(profileData.user);
         } else {
           setUserData(null);
         }
@@ -90,18 +86,37 @@ const EditProfile = () => {
             Editar Perfil
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {Object.entries(userData).map(([key, value]) => (
-              <div key={key} className="flex flex-col">
-                <label className="font-semibold text-gray-800 capitalize">{key}</label>
-                <input
-                  type={key === "email" ? "email" : "text"}
-                  name={key}
-                  placeholder={value}
-                  className="p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-gray-800"
-                  disabled={loading}
-                />
-              </div>
-            ))}
+            <div className="flex flex-col">
+              <label className="font-semibold text-gray-800 capitalize">Nombre</label>
+              <input
+                type="text"
+                name="name"
+                defaultValue={userData.name}
+                className="p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-gray-800"
+                disabled={loading}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="font-semibold text-gray-800 capitalize">Apellido</label>
+              <input
+                type="text"
+                name="lastName"
+                defaultValue={userData.lastname}
+                className="p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-gray-800"
+                disabled={loading}
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="font-semibold text-gray-800 capitalize">Teléfono</label>
+              <input
+                type="text"
+                name="phone"
+                defaultValue={userData.phone}
+                className="p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-gray-800"
+                disabled={loading}
+              />
+            </div>
             {error && (
               <div className="text-red-600 text-sm">{error}</div>
             )}

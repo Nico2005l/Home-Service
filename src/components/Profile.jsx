@@ -36,6 +36,7 @@ useEffect(() => {
             });
             if (response.ok) {
                 const profileData = await response.json();
+                console.log("Profile data:", profileData);
                 setProfile(profileData);
             } else {
                 setProfile(null);
@@ -84,7 +85,7 @@ return (
                     <label className="font-semibold text-gray-800 w-40">Nombre</label>
                     <input
                         type="text"
-                        value={profile.nombre + " " + profile.apellido || ""}
+                        value={profile.user.name +" "+ profile.user.lastname || ""}
                         readOnly
                         className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
                     />
@@ -94,7 +95,7 @@ return (
                     <label className="font-semibold text-gray-800 w-40">Email</label>
                     <input
                         type="email"
-                        value={profile.email || ""}
+                        value={profile.user.email || ""}
                         readOnly
                         className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
                     />
@@ -104,7 +105,7 @@ return (
                     <label className="font-semibold text-gray-800 w-40">Telefono</label>
                     <input
                         type="text"
-                        value={profile.telefono || ""}
+                        value={profile.user.phone || ""}
                         readOnly
                         className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
                     />
@@ -114,7 +115,7 @@ return (
                     <label className="font-semibold text-gray-800 w-40">DNI</label>
                     <input
                         type="text"
-                        value={profile.dni || ""}
+                        value={profile.user.dni || ""}
                         readOnly
                         className="sm:ml-3 mt-2 sm:mt-0 p-2 border border-blue-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 w-full text-gray-800"
                     />
