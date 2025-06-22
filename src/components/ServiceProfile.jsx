@@ -64,17 +64,7 @@ const ServiceProfile = () => {
           </div>
         </div>
 
-        {/* Galería de imágenes (placeholders) */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              className="w-full h-44 bg-gray-100 rounded flex items-center justify-center text-gray-400 border border-blue-800"
-            >
-              Imagen
-            </div>
-          ))}
-        </div>
+        
 
         
 
@@ -91,7 +81,7 @@ const ServiceProfile = () => {
                   <span key={i + 10} className="text-gray-300">★</span>
                 ))}
               </div>
-              <h3 className="font-semibold text-blue-950">Usuario {review.user_id}</h3>
+              <h3 className="font-semibold text-blue-950">Usuario Anonimo</h3>
               <p className="text-sm text-gray-400">{review.comment}</p>
               <div className="mt-3 text-xs text-gray-500">
                 <p>{new Date(review.created_at).toLocaleDateString()}</p>
