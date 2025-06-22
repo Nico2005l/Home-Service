@@ -64,7 +64,7 @@ return (
         <main className="flex flex-col md:flex-row justify-center items-center w-full max-w-3xl bg-white shadow-xl rounded-2xl p-8 mt-10 mx-auto">
             <div className="flex flex-col items-center md:mr-12 mb-8 md:mb-0">
                 <img
-                    src={profile.avatarUrl || "profile-picture-url"}
+                    src={profile.avatarUrl || "/media/userfoto.png"}
                     alt="Profile"
                     className="rounded-full w-40 h-40 border-4 border-blue-950 shadow-lg object-cover"
                 />
