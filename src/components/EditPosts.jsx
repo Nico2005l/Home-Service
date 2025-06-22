@@ -56,7 +56,7 @@ const EditPosts = () => {
               <div className="aspect-square bg-gray-300 flex items-center justify-center rounded overflow-hidden">
                 {post.images && post.images.length > 0 ? (
                   <img
-                    src={post.images[0]}
+                    src={post.images[0] || "/media/placeholder1.webp"}
                     alt="Imagen del servicio"
                     className="w-full h-full object-cover rounded"
                   />

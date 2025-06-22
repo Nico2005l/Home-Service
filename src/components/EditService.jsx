@@ -119,7 +119,7 @@ const EditService = () => {
             {imagePreview ? (
               <img src={imagePreview} alt="preview" className="w-full h-full object-cover" />
             ) : (
-              <span className="text-blue-950">Sin imagen</span>
+              <img src="/media/placeholder1.webp" alt="preview" className="w-full h-full object-cover" />
             )}
 
             <button
