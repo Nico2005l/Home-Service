@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 
-const CATEGORIES = ["Plomería", "Electricista", "Limpieza"];
+const CATEGORIES = ["plomeria", "electricista", "limpieza"];
 
 const MarketPage = () => {
   const [services, setServices] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(CATEGORIES);
   const [priceRange, setPriceRange] = useState(250000);
   const [usePriceFilter, setUsePriceFilter] = useState(false);
   const [order, setOrder] = useState('nuevo'); // 'nuevo', 'asc', 'desc'
@@ -68,7 +68,7 @@ const MarketPage = () => {
             <h2 className="font-semibold mb-2 text-blue-950">Categorías</h2>
             <div className="flex flex-wrap gap-2">
               {CATEGORIES.map(cat => (
-                <label key={cat} className="flex items-center gap-1 text-blue-950">
+                <label key={cat} className="flex items-center gap-1 capitalize text-blue-950">
                   <input
                     type="checkbox"
                     checked={selectedCategories.includes(cat)}
