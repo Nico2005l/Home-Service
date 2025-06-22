@@ -11,6 +11,13 @@ const isAuthenticated = () => {
 
 const ContactPage = () => {
 
+    const isAuthenticated = !!localStorage.getItem('token');
+    if (!isAuthenticated) {
+        window.location.replace('/login');
+        return null; // Evita renderizar el componente si no está autenticado
+    }
+    
+
     const navigate = useNavigate();
 
     useEffect(() => {

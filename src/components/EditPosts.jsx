@@ -8,6 +8,12 @@ const EditPosts = () => {
   const [confirmId, setConfirmId] = useState(null);
   const navigate = useNavigate();
 
+  const isAuthenticated = !!localStorage.getItem('token');
+  if (!isAuthenticated) {
+    window.location.replace('/login');
+    return null; // Evita renderizar el componente si no está autenticado
+  }
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
