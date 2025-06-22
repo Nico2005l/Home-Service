@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/NavBar';
 import { ArrowLeft } from 'lucide-react';
 
+const CATEGORIES = ["plomeria", "electricista", "limpieza", "jardineria", "otros"];
+
 const EditService = () => {
   const { id } = useParams();
   const navigate = useNavigate();
