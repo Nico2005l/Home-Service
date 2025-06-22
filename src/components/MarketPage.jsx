@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 
-const CATEGORIES = ["plomeria", "electricista", "limpieza"];
+const CATEGORIES = ["plomeria", "electricista", "limpieza", "jardineria", "otros"];
 
 const MarketPage = () => {
   const [services, setServices] = useState([]);
