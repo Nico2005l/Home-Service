@@ -2,6 +2,9 @@ import React from 'react';
 import Navbar from './NavBar';
 
 const HomePage = () => {
+  const isLoggedIn = !!localStorage.getItem('token');
+ 
+
   return (
     <div className="bg-[#081F41] min-h-screen">
       <Navbar />
@@ -71,6 +74,7 @@ const HomePage = () => {
       </section>
 
       {/* CTA Final */}
+      {      isLoggedIn ? null : (
       <footer className="bg-gradient-to-r from-[#0052CC] to-[#00C6A0] py-16 text-white text-center">
         <h2 className="text-3xl font-bold mb-4">¿Listo para encontrar al profesional ideal?</h2>
         <p className="mb-6">Únete hoy y accede a una red de expertos confiables</p>
@@ -79,6 +83,7 @@ const HomePage = () => {
           Crear cuenta
         </button>
       </footer>
+      )}
     </div>
   );
 };
