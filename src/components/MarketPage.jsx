@@ -141,6 +141,13 @@ const MarketPage = () => {
               </div>
               <div className="flex gap-2 text-sm">
                 <button
+                  className={`px-3 py-1 rounded border border-blue-800 ${order === 'nuevo' ? 'bg-[#0052CC] text-white' : 'bg-white text-blue-800'} hover:bg-[#00C6A0] hover:text-white`}
+                  onClick={() => setOrder('nuevo')}
+                >
+                  Más recientes
+                </button>
+              
+                <button
                   className={`px-3 py-1 rounded border border-blue-800 ${order === 'asc' ? 'bg-[#0052CC] text-white' : 'bg-white text-blue-800'} hover:bg-[#00C6A0] hover:text-white`}
                   onClick={() => setOrder('asc')}
                 >
