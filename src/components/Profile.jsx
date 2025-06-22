@@ -4,9 +4,14 @@ import Navbar from "./NavBar";
 import { useEffect, useState } from "react";
 
 const Profile = () => {
-  const navigate = useNavigate();
+  
 
   const isAuthenticated = !!localStorage.getItem("token");
+  
+  if (!isAuthenticated) {
+    window.location.replace("/login");
+    return null; // Evita renderizar el componente si no está autenticado
+  }
 
   // Obtener datos del usuario desde localStorage
   const user = JSON.parse(localStorage.getItem("user")) || {};
@@ -17,10 +22,7 @@ const Profile = () => {
     window.location.replace("/");
   };
 
-  if (!isAuthenticated) {
-    navigate("/login");
-    return null; // Evita renderizar el componente si no está autenticado
-  }
+  
 
 const [profile, setProfile] = useState(null);
 

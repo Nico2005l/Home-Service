@@ -3,6 +3,14 @@ import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
 
 const MenuPosteos = () => {
+
+  // Verifica si el usuario está autenticado
+  const isAuthenticated = !!localStorage.getItem('token');
+  if (!isAuthenticated) {
+    window.location.replace('/login');
+    return null; // Evita renderizar el componente si no está autenticado
+  }
+  
   const navigate = useNavigate();
 
   return (
