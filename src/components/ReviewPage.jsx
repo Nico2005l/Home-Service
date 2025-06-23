@@ -17,7 +17,7 @@ const ReviewPage = () => {
                     alert('Debes iniciar sesión para enviar una reseña.');
                     return;
                 }
-                const response = await fetch('http://localhost:3000/api/auth/profile',  {
+                const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/auth/profile',  {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -63,7 +63,7 @@ const ReviewPage = () => {
             user_id: userId, // Usa el ID del usuario obtenido
         };
         console.log('Datos de la reseña:', reviewData);
-        fetch('http://localhost:3000/api/reviews', {
+        fetch('https://home-service-backend-9yhw.onrender.com/api/reviews', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

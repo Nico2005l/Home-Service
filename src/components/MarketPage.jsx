@@ -22,7 +22,7 @@ const MarketPage = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/services/');
+        const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/services/');
         if (!response.ok) throw new Error('Error al cargar los servicios');
         const data = await response.json();
         setServices(data);

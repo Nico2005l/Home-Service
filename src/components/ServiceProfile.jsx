@@ -10,11 +10,10 @@ const ServiceProfile = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
-
   useEffect(() => {
 
     const reviews = async () => {
-      const response = await fetch(`http://localhost:3000/api/reviews/service/${id}`);
+      const response = await fetch(`https://home-service-backend-9yhw.onrender.com/api/reviews/service/${id}`);
       const data = await response.json();
       console.log("Reviews data:", data);
       setReviews(data);
@@ -22,7 +21,7 @@ const ServiceProfile = () => {
     reviews();
 
     const fetchService = async () => {
-      const response = await fetch(`http://localhost:3000/api/services/${id}`);
+      const response = await fetch(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`);
       const data = await response.json();
 
       console.log("Service data:", data.images);
@@ -31,7 +30,6 @@ const ServiceProfile = () => {
     };
     fetchService();
     setLoading(false);
-
 
   }, [id]);
 

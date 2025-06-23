@@ -18,7 +18,7 @@ const UploadImage = ({ onUpload }) => {
     formData.append('image', file);
 
     try {
-      const res = await fetch('http://localhost:3000/api/services/upload-image', {
+      const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services/upload-image', {
         method: 'POST',
         body: formData,
       });

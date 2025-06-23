@@ -31,7 +31,7 @@ useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) return;
         try {
-            const response = await fetch("http://localhost:3000/api/auth/profile", {
+            const response = await fetch("https://home-service-backend-9yhw.onrender.com/api/auth/profile", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

@@ -18,7 +18,7 @@ const EditProfile = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
       try {
-        const response = await fetch("http://localhost:3000/api/auth/profile", {
+        const response = await fetch("https://home-service-backend-9yhw.onrender.com/api/auth/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -34,7 +34,7 @@ const EditProfile = () => {
         setUserData(null);
       }
       return response.json();
-  };
+    };
     fetchUserData();
 
   }, []);
@@ -48,15 +48,13 @@ const EditProfile = () => {
     return null; // Evita renderizar el componente si no está autenticado
   }
 
-
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // Cambia la URL por la de tu API real
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
-      const response = await fetch("http://localhost:3000/api/auth/edit", {
+      const response = await fetch("https://home-service-backend-9yhw.onrender.com/api/auth/edit", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -38,7 +38,7 @@ const CreateService = () => {
     formData.append('image', file);
 
     try {
-      const res = await fetch('http://localhost:3000/api/services/upload-image', {
+      const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services/upload-image', {
         method: 'POST',
         body: formData,
       });
@@ -65,7 +65,7 @@ const CreateService = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/services', {
+      const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/services', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

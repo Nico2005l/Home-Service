@@ -17,7 +17,7 @@ const EditPosts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/services');
+        const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services');
         const data = await res.json();
         setPosts(data);
       } catch (error) {
@@ -30,7 +30,7 @@ const EditPosts = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:3000/api/services/${id}`, {
+      await fetch(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`, {
         method: 'DELETE'
       });
       setPosts(prev => prev.filter(post => post.id !== id));
