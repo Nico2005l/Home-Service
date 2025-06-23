@@ -72,7 +72,7 @@ return (
                 />
                 <button
                     className="mt-6 px-8 py-2 bg-[#0052CC] text-white font-semibold rounded-xl shadow hover:bg-[#00C6A0] transition-colors duration-200"
-                    onClick={() => navigate("/editar-perfil")}
+                    onClick={() => window.location.replace("/edit-profile")}
                 >
                     Editar Perfil
                 </button>
