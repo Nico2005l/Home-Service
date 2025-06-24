@@ -6,6 +6,7 @@ import { Pencil, Trash2, ArrowLeft } from 'lucide-react';
 const EditPosts = () => {
   const [posts, setPosts] = useState([]);
   const [confirmId, setConfirmId] = useState(null);
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
   const isAuthenticated = !!localStorage.getItem('token');
@@ -19,11 +20,36 @@ const EditPosts = () => {
       try {
         const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services');
         const data = await res.json();
+        const filtered = data.filter(post => post.user_id === userId);
         setPosts(data);
       } catch (error) {
         console.error('Error al cargar los posteos', error);
       }
     };
+    const fetchUserId = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          alert('Debes iniciar sesión para editar o eliminar posteos.');
+          return;
+        }
+        const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/auth/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Error al obtener el perfil del usuario');
+        }
+        const data = await response.json();
+        console.log('User ID:', data.user.id); // Verifica que el ID del usuario
+        setUserId(data.user.id); // Asegúrate de que el ID del usuario esté en esta ruta
+      } catch (error) {
+        console.error('Error fetching user ID:', error);
+        alert('Hubo un problema al obtener tu información de usuario. Por favor, inténtalo de nuevo más tarde.');
+      }
+    };
+    fetchUserId();
 
     fetchPosts();
   }, []);
