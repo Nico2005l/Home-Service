@@ -21,7 +21,7 @@ const EditPosts = () => {
         const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services');
         const data = await res.json();
         const filtered = data.filter(post => post.user_id === userId);
-        setPosts(data);
+        setPosts(filtered);
       } catch (error) {
         console.error('Error al cargar los posteos', error);
       }
