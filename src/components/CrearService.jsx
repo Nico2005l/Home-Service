@@ -23,7 +23,7 @@ const CreateService = () => {
     }
     const fetchUserid = async () => {
             try {
-                const token = localStorage.getItem('token');
+                const token = sessionStorage.getItem('token');
                 if (!token) {
                     alert('Debes iniciar sesión para enviar una reseña.');
                     return;

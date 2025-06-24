@@ -12,7 +12,7 @@ const MarketPage = () => {
   const [order, setOrder] = useState('nuevo'); // 'nuevo', 'asc', 'desc'
   const [search, setSearch] = useState("");
 
-  const isAuthenticated = !!localStorage.getItem("token");
+  const isAuthenticated = !!sessionStorage.getItem("token");
   if (!isAuthenticated) {
     window.location.replace("/login");
     return null; // Evita renderizar el componente si no está autenticado

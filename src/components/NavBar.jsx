@@ -11,11 +11,11 @@ const navLinks = [
 
 // Verifica si el usuario está autenticado
 const Navbar = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
+    const [isAuthenticated, setIsAuthenticated] = useState(!!sessionStorage.getItem('token'));
 
     useEffect(() => {
         const handleStorageChange = () => {
-            setIsAuthenticated(!!localStorage.getItem('token'));
+            setIsAuthenticated(!!sessionStorage.getItem('token'));
         };
 
         window.addEventListener('storage', handleStorageChange);

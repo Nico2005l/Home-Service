@@ -25,11 +25,11 @@ const LoginForm = () => {
         throw new Error('Credenciales inválidas');
       }
       const data = await res.json();
-      localStorage.setItem('token', data.token);
+      sessionStorage.setItem('token', data.token);
       if (data.user) {
-        localStorage.setItem('user', JSON.stringify(data.user));
+        sessionStorage.setItem('user', JSON.stringify(data.user));
       }
-      localStorage.setItem('rol', data.role); // Si sigues usando esto
+      sessionStorage.setItem('rol', data.role); // Si sigues usando esto
       navigate('/');
     } catch (err) {
       setError(err.message);

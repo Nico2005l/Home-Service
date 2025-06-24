@@ -9,7 +9,7 @@ const EditPosts = () => {
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
-  const isAuthenticated = !!localStorage.getItem('token');
+  const isAuthenticated = !!sessionStorage.getItem('token');
   if (!isAuthenticated) {
     window.location.replace('/login');
     return null; // Evita renderizar el componente si no está autenticado
@@ -20,7 +20,9 @@ const EditPosts = () => {
       try {
         const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services');
         const data = await res.json();
+        console.log('Post data:', data); // Verifica que los datos se estén obteniendo correctamente
         const filtered = data.filter(post => post.user_id === userId);
+        console.log('Filtered posts:', filtered); // Verifica que los posteos filtrados sean correctos
         setPosts(filtered);
       } catch (error) {
         console.error('Error al cargar los posteos', error);
@@ -28,7 +30,7 @@ const EditPosts = () => {
     };
     const fetchUserId = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (!token) {
           alert('Debes iniciar sesión para editar o eliminar posteos.');
           return;

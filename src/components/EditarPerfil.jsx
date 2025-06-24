@@ -15,7 +15,7 @@ const EditProfile = () => {
   
   useEffect(() => {
     const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       if (!token) return;
       try {
         const response = await fetch("https://home-service-backend-9yhw.onrender.com/api/auth/profile", {
@@ -42,7 +42,7 @@ const EditProfile = () => {
     return <div>Cargando...</div>;
   }
 
-  const isAuthenticated = !!localStorage.getItem("token");
+  const isAuthenticated = !!sessionStorage.getItem("token");
   if (!isAuthenticated) {
     window.location.replace("/login");
     return null; // Evita renderizar el componente si no está autenticado
@@ -58,7 +58,7 @@ const EditProfile = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
         },
         body: JSON.stringify(data),
       });

@@ -6,19 +6,19 @@ import { useEffect, useState } from "react";
 const Profile = () => {
   
 
-  const isAuthenticated = !!localStorage.getItem("token");
+  const isAuthenticated = !!sessionStorage.getItem("token");
   
   if (!isAuthenticated) {
     window.location.replace("/login");
     return null; // Evita renderizar el componente si no está autenticado
   }
 
-  // Obtener datos del usuario desde localStorage
-  const user = JSON.parse(localStorage.getItem("user")) || {};
+  // Obtener datos del usuario desde sessionStorage
+  const user = JSON.parse(sessionStorage.getItem("user")) || {};
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
     window.location.replace("/");
   };
 
