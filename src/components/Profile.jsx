@@ -28,7 +28,7 @@ const [profile, setProfile] = useState(null);
 
 useEffect(() => {
     const fetchProfile = async () => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (!token) return;
         try {
             const response = await fetch("https://home-service-backend-9yhw.onrender.com/api/auth/profile", {
