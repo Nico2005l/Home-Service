@@ -3,10 +3,12 @@ import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { Pencil, Trash2, ArrowLeft } from 'lucide-react';
 
+
+
 const EditPosts = () => {
   const [posts, setPosts] = useState([]);
   const [confirmId, setConfirmId] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(11);
   const navigate = useNavigate();
 
   const isAuthenticated = !!sessionStorage.getItem('token');
@@ -16,19 +18,8 @@ const EditPosts = () => {
   }
 
   useEffect(() => {
+    
     const fetchPosts = async () => {
-      try {
-        const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services');
-        const data = await res.json();
-        console.log('Post data:', data); // Verifica que los datos se estén obteniendo correctamente
-        const filtered = data.filter(post => post.user_id === userId);
-        console.log('Filtered posts:', filtered); // Verifica que los posteos filtrados sean correctos
-        setPosts(filtered);
-      } catch (error) {
-        console.error('Error al cargar los posteos', error);
-      }
-    };
-    const fetchUserId = async () => {
       try {
         const token = sessionStorage.getItem('token');
         if (!token) {
@@ -44,14 +35,26 @@ const EditPosts = () => {
           throw new Error('Error al obtener el perfil del usuario');
         }
         const data = await response.json();
-        console.log('User ID:', data.user.id); // Verifica que el ID del usuario
         setUserId(data.user.id); // Asegúrate de que el ID del usuario esté en esta ruta
       } catch (error) {
         console.error('Error fetching user ID:', error);
         alert('Hubo un problema al obtener tu información de usuario. Por favor, inténtalo de nuevo más tarde.');
       }
+      try {
+        const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services');
+        const data = await res.json();
+        
+        // Filtra los posteos para mostrar solo los del usuario actual
+        const userPosts = data.filter(post => post.user_id === userId);
+
+        console.log('Post data:', userPosts);
+        console.log('User ID:', userId);
+
+        setPosts(userPosts);
+      } catch (error) {
+        console.error('Error al cargar los posteos', error);
+      }
     };
-    fetchUserId();
 
     fetchPosts();
   }, []);
