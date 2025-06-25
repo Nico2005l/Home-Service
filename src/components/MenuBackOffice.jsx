@@ -14,7 +14,7 @@ const MenuBackOffice = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/users");
+      const res = await axios.get("https://home-service-backend-9yhw.onrender.com/api/users");
       setUsers(res.data);
     } catch (error) {
       console.error("Error al obtener usuarios", error);
@@ -23,7 +23,7 @@ const MenuBackOffice = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/services");
+      const res = await axios.get("https://home-service-backend-9yhw.onrender.com/api/services");
       setPosts(res.data);
     } catch (error) {
       console.error("Error al obtener posts", error);
@@ -32,7 +32,7 @@ const MenuBackOffice = () => {
 
   const handleDeleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/users/${id}`);
+      await axios.delete(`https://home-service-backend-9yhw.onrender.com/api/users/${id}`);
       fetchUsers();
       fetchPosts();
     } catch (error) {
@@ -42,7 +42,7 @@ const MenuBackOffice = () => {
 
   const handleDeletePost = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/services/${id}`);
+      await axios.delete(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`);
       fetchPosts();
     } catch (error) {
       console.error("Error al eliminar post", error);
