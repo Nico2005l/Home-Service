@@ -1,0 +1,1 @@
+export const BACKEND_URL = "home-service-backend-production.up.railway.app";
