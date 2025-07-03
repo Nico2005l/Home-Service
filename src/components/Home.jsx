@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './NavBar';
 
 const HomePage = () => {
-  const isLoggedIn = !!localStorage.getItem('token');
+  const isLoggedIn = !!sessionStorage.getItem('token');
  
 
   return (

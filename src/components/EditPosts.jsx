@@ -3,25 +3,54 @@ import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { Pencil, Trash2, ArrowLeft } from 'lucide-react';
 
+
+
 const EditPosts = () => {
   const [posts, setPosts] = useState([]);
   const [confirmId, setConfirmId] = useState(null);
+  const [userId, setUserId] = useState();
   const navigate = useNavigate();
 
-  const isAuthenticated = !!localStorage.getItem('token');
+  const isAuthenticated = !!sessionStorage.getItem('token');
   if (!isAuthenticated) {
     window.location.replace('/login');
     return null; // Evita renderizar el componente si no está autenticado
   }
 
   useEffect(() => {
+    
     const fetchPosts = async () => {
       try {
-        const res = await fetch('http://localhost:3000/api/services');
-        const data = await res.json();
-        setPosts(data);
+      const token = sessionStorage.getItem('token');
+      if (!token) {
+        alert('Debes iniciar sesión para editar o eliminar posteos.');
+        return;
+      }
+      const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/auth/profile', {
+        headers: {
+        Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Error al obtener el perfil del usuario');
+      }
+      const data = await response.json();
+      setUserId(data.user.id); // Asegúrate de que el ID del usuario esté en esta ruta
+
+      // Ahora que tenemos el userId, obtenemos los posteos
+      try {
+        const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services');
+        const postsData = await res.json();
+        const userPosts = postsData.filter(post => post.user_id === data.user.id);
+        console.log('User ID:', data.user.id); // Verifica que el ID del usuario esté en la respuesta
+        console.log('User posts:', userPosts); // Verifica que los posteos del usuario se obtengan correctamente
+        setPosts(userPosts);
       } catch (error) {
         console.error('Error al cargar los posteos', error);
+      }
+      } catch (error) {
+      console.error('Error fetching user ID:', error);
+      alert('Hubo un problema al obtener tu información de usuario. Por favor, inténtalo de nuevo más tarde.');
       }
     };
 
@@ -30,7 +59,7 @@ const EditPosts = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:3000/api/services/${id}`, {
+      await fetch(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`, {
         method: 'DELETE'
       });
       setPosts(prev => prev.filter(post => post.id !== id));

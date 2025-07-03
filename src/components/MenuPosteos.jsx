@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const MenuPosteos = () => {
 
   // Verifica si el usuario está autenticado
-  const isAuthenticated = !!localStorage.getItem('token');
+  const isAuthenticated = !!sessionStorage.getItem('token');
   if (!isAuthenticated) {
     window.location.replace('/login');
     return null; // Evita renderizar el componente si no está autenticado

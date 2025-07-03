@@ -6,19 +6,19 @@ import { useEffect, useState } from "react";
 const Profile = () => {
   
 
-  const isAuthenticated = !!localStorage.getItem("token");
+  const isAuthenticated = !!sessionStorage.getItem("token");
   
   if (!isAuthenticated) {
     window.location.replace("/login");
     return null; // Evita renderizar el componente si no está autenticado
   }
 
-  // Obtener datos del usuario desde localStorage
-  const user = JSON.parse(localStorage.getItem("user")) || {};
+  // Obtener datos del usuario desde sessionStorage
+  const user = JSON.parse(sessionStorage.getItem("user")) || {};
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
     window.location.replace("/");
   };
 
@@ -28,10 +28,10 @@ const [profile, setProfile] = useState(null);
 
 useEffect(() => {
     const fetchProfile = async () => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (!token) return;
         try {
-            const response = await fetch("http://localhost:3000/api/auth/profile", {
+            const response = await fetch("https://home-service-backend-9yhw.onrender.com/api/auth/profile", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -72,7 +72,7 @@ return (
                 />
                 <button
                     className="mt-6 px-8 py-2 bg-[#0052CC] text-white font-semibold rounded-xl shadow hover:bg-[#00C6A0] transition-colors duration-200"
-                    onClick={() => navigate("/editar-perfil")}
+                    onClick={() => window.location.replace("/editar-perfil")}
                 >
                     Editar Perfil
                 </button>

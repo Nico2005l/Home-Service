@@ -7,25 +7,28 @@ const CATEGORIES = ["plomeria", "electricista", "limpieza", "jardineria", "otros
 const MarketPage = () => {
   const [services, setServices] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(CATEGORIES);
-  const [priceRange, setPriceRange] = useState(250000);
+  const [priceRange, setPriceRange] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(250000);
   const [usePriceFilter, setUsePriceFilter] = useState(false);
-  const [order, setOrder] = useState('nuevo'); // 'nuevo', 'asc', 'desc'
+  const [order, setOrder] = useState('nuevo');
   const [search, setSearch] = useState("");
 
-  const isAuthenticated = !!localStorage.getItem("token");
+  const isAuthenticated = !!sessionStorage.getItem("token");
   if (!isAuthenticated) {
     window.location.replace("/login");
-    return null; // Evita renderizar el componente si no está autenticado
+    return null;
   }
-  
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/services/');
+        const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/services/');
         if (!response.ok) throw new Error('Error al cargar los servicios');
         const data = await response.json();
         setServices(data);
+        const max = Math.max(...data.map(s => s.price), 0);
+        setMaxPrice(max);
+        setPriceRange(max);
       } catch (error) {
         console.error('Error fetching services:', error);
       }
@@ -33,11 +36,8 @@ const MarketPage = () => {
     fetchServices();
   }, []);
 
-  // Filtros
   let filtered = services.filter(s => {
-    // Si no hay categorías seleccionadas, mostrar todos
     if (selectedCategories.length === 0) return true;
-    // Si hay seleccionadas, mostrar solo las que coinciden exactamente
     return selectedCategories.includes(s.category);
   })
   .filter(s =>
@@ -48,7 +48,6 @@ const MarketPage = () => {
     )
   );
 
-  // Ordenamiento
   if (order === 'asc') {
     filtered = filtered.sort((a, b) => a.price - b.price);
   } else if (order === 'desc') {
@@ -57,7 +56,6 @@ const MarketPage = () => {
     filtered = filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   }
 
-  // Handlers
   const handleCategoryChange = (cat) => {
     setSelectedCategories(prev =>
       prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
@@ -67,13 +65,9 @@ const MarketPage = () => {
   return (
     <div className="bg-[#081F41] min-h-screen">
       <NavBar />
-
-      {/* Sección superior: Título */}
       <h1 className="text-3xl font-semibold text-white p-6 mt-2">Mercado</h1>
 
-      {/* Main content */}
       <div className="flex flex-col lg:flex-row gap-4 px-2 sm:px-4 md:px-6 py-4 md:py-6">
-        {/* Filtros */}
         <aside className="w-full lg:w-64 space-y-4 text-sm mb-4 lg:mb-0">
           <div className="border border-blue-800 rounded p-4 bg-white">
             <h2 className="font-semibold mb-2 text-blue-950">Categorías</h2>
@@ -90,7 +84,6 @@ const MarketPage = () => {
               ))}
             </div>
 
-            {/* Filtro de precio */}
             <div className="mt-4">
               <label className="block text-xs font-semibold mb-1 text-blue-950 flex items-center gap-2">
                 <input
@@ -104,7 +97,7 @@ const MarketPage = () => {
                 <input
                   type="range"
                   min="0"
-                  max="250000"
+                  max={maxPrice}
                   value={priceRange}
                   onChange={e => setPriceRange(Number(e.target.value))}
                   className="w-full accent-[#00C6A0]"
@@ -113,11 +106,11 @@ const MarketPage = () => {
                 <input
                   type="number"
                   min="0"
-                  max="250000"
+                  max={maxPrice}
                   value={priceRange}
                   onChange={e => {
                     let val = Number(e.target.value);
-                    if (val > 250000) val = 250000;
+                    if (val > maxPrice) val = maxPrice;
                     if (val < 0) val = 0;
                     setPriceRange(val);
                   }}
@@ -132,7 +125,6 @@ const MarketPage = () => {
           </div>
         </aside>
 
-        {/* Productos */}
         <main className="flex-1">
           <div className="bg-white rounded-lg shadow p-4 sm:p-6">
             <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center mb-4 gap-2">
@@ -168,7 +160,6 @@ const MarketPage = () => {
               </div>
             </div>
 
-            {/* Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filtered.map((s, i) => (
                 <Link to={`/servicio/${s.id}`} key={i} className="block">

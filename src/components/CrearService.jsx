@@ -14,12 +14,37 @@ const CreateService = () => {
 
   const [imageUrl, setImageUrl] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => setSuccessMessage(''), 3000);
       return () => clearTimeout(timer);
     }
+    const fetchUserid = async () => {
+            try {
+                const token = sessionStorage.getItem('token');
+                if (!token) {
+                    alert('Debes iniciar sesión para enviar una reseña.');
+                    return;
+                }
+                const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/auth/profile',  {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Error al obtener el perfil del usuario');
+                }
+                const data = await response.json();
+                console.log('User ID:', data.user.id); // Verifica que el ID del usuario esté en la respuesta
+                setUserId(data.user.id); // Asegúrate de que el ID del usuario esté en esta ruta
+            } catch (error) {
+                console.error('Error fetching user ID:', error);
+                alert('Hubo un problema al obtener tu información de usuario. Por favor, inténtalo de nuevo más tarde.');
+            }
+        };
+        fetchUserid();
   }, [successMessage]);
 
   const handleChange = (e) => {
@@ -38,7 +63,7 @@ const CreateService = () => {
     formData.append('image', file);
 
     try {
-      const res = await fetch('http://localhost:3000/api/services/upload-image', {
+      const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services/upload-image', {
         method: 'POST',
         body: formData,
       });
@@ -65,11 +90,12 @@ const CreateService = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/services', {
+      const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/services', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: name.trim(),
+          user_id: userId,
           price: parseFloat(price),
           description: description.trim(),
           category: category.trim(),

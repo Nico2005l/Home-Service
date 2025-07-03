@@ -18,7 +18,7 @@ const EditService = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/services/${id}`);
+        const res = await fetch(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`);
         if (!res.ok) throw new Error('No se encontró el servicio');
         const data = await res.json();
         setPost(data);
@@ -55,7 +55,7 @@ const EditService = () => {
       formData.append('image', newImageFile);
 
       try {
-        const res = await fetch('http://localhost:3000/api/services/upload-image', {
+        const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services/upload-image', {
           method: 'POST',
           body: formData
         });
@@ -69,7 +69,7 @@ const EditService = () => {
     }
 
     try {
-      await fetch(`http://localhost:3000/api/services/${id}`, {
+      await fetch(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
