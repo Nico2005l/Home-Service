@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "./NavBar";
 import { useState, useEffect, us } from "react";
 import { useParams } from "react-router-dom";
-
+import { BACKEND_URL } from "../utils/backendURL"; // Importa la URL del backend
 
 
 const ServiceProfile = () => {
@@ -13,7 +13,7 @@ const ServiceProfile = () => {
   useEffect(() => {
 
     const reviews = async () => {
-      const response = await fetch(`https://home-service-backend-9yhw.onrender.com/api/reviews/service/${id}`);
+      const response = await fetch(`${BACKEND_URL}/api/reviews/service/${id}`);
       const data = await response.json();
       console.log("Reviews data:", data);
       setReviews(data);
@@ -21,7 +21,7 @@ const ServiceProfile = () => {
     reviews();
 
     const fetchService = async () => {
-      const response = await fetch(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`);
+      const response = await fetch(`${BACKEND_URL}/api/services/${id}`);
       const data = await response.json();
 
       console.log("Service data:", data.images);

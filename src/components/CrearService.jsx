@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from '../utils/backendURL'; // Importa la URL del backend
 
 const CreateService = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const CreateService = () => {
                     alert('Debes iniciar sesión para enviar una reseña.');
                     return;
                 }
-                const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/auth/profile',  {
+                const response = await fetch(`${BACKEND_URL}/api/auth/profile`,  {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -63,7 +64,7 @@ const CreateService = () => {
     formData.append('image', file);
 
     try {
-      const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services/upload-image', {
+      const res = await fetch(`${BACKEND_URL}/api/services/upload-image`, {
         method: 'POST',
         body: formData,
       });
@@ -90,7 +91,7 @@ const CreateService = () => {
     }
 
     try {
-      const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/services', {
+      const response = await fetch(`${BACKEND_URL}/api/services`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

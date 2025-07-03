@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from './NavBar';
 import { useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from '../utils/backendURL'; // Importa la URL del backend
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const RegisterForm = () => {
       return;
     }
     try {
-      const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/auth/register', {
+      const res = await fetch(`${BACKEND_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

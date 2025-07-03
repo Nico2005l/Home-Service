@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./NavBar";
 import { useEffect, useState } from "react";
+import { BACKEND_URL } from "../utils/backendURL"; 
 
 const Profile = () => {
   
@@ -31,7 +32,7 @@ useEffect(() => {
         const token = sessionStorage.getItem("token");
         if (!token) return;
         try {
-            const response = await fetch("https://home-service-backend-9yhw.onrender.com/api/auth/profile", {
+            const response = await fetch(`${BACKEND_URL}/api/auth/profile`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

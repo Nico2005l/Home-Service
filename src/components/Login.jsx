@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { BACKEND_URL } from '../utils/backendURL';  
 import Navbar from './NavBar';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ const LoginForm = () => {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/auth/login', {
+      const res = await fetch(`${BACKEND_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: form.email, password: form.password }),

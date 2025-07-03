@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../components/NavBar';
+import { BACKEND_URL } from '../utils/backendURL'; // Importa la URL del backend
 
 const CATEGORIES = ["plomeria", "electricista", "limpieza", "jardineria", "otros"];
 
@@ -22,7 +23,7 @@ const MarketPage = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/services/');
+        const response = await fetch(`${BACKEND_URL}/api/services/`);
         if (!response.ok) throw new Error('Error al cargar los servicios');
         const data = await response.json();
         setServices(data);

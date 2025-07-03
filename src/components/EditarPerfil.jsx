@@ -1,7 +1,7 @@
 import React, { useState, useEffect, use } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from '../components/NavBar';
-
+import { BACKEND_URL } from '../utils/backendURL'; // Importa la URL del backend
 
 
 
@@ -18,7 +18,7 @@ const EditProfile = () => {
       const token = sessionStorage.getItem("token");
       if (!token) return;
       try {
-        const response = await fetch("https://home-service-backend-9yhw.onrender.com/api/auth/profile", {
+        const response = await fetch(`${BACKEND_URL}/api/auth/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -54,7 +54,7 @@ const EditProfile = () => {
       // Cambia la URL por la de tu API real
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
-      const response = await fetch("https://home-service-backend-9yhw.onrender.com/api/auth/edit", {
+      const response = await fetch(`${BACKEND_URL}/api/auth/edit`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NavBar from '../components/NavBar';
 import { useNavigate } from 'react-router-dom';
 import { Pencil, Trash2, ArrowLeft } from 'lucide-react';
-
+import { BACKEND_URL } from '../utils/backendURL'; // Importa la URL del backend
 
 
 const EditPosts = () => {
@@ -26,7 +26,7 @@ const EditPosts = () => {
         alert('Debes iniciar sesión para editar o eliminar posteos.');
         return;
       }
-      const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/auth/profile', {
+      const response = await fetch(`${BACKEND_URL}/api/auth/profile`, {
         headers: {
         Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ const EditPosts = () => {
 
       // Ahora que tenemos el userId, obtenemos los posteos
       try {
-        const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services');
+        const res = await fetch(`${BACKEND_URL}/api/services`);
         const postsData = await res.json();
         const userPosts = postsData.filter(post => post.user_id === data.user.id);
         console.log('User ID:', data.user.id); // Verifica que el ID del usuario esté en la respuesta
@@ -59,7 +59,7 @@ const EditPosts = () => {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`, {
+      await fetch(`${BACKEND_URL}/api/services/${id}`, {
         method: 'DELETE'
       });
       setPosts(prev => prev.filter(post => post.id !== id));

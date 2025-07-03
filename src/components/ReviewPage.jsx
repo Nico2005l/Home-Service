@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Navbar from '../components/NavBar';
 import { useEffect } from 'react';
+import { BACKEND_URL } from '../utils/backendURL'; // Importa la URL del backend
+
 const ReviewPage = () => {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
@@ -17,7 +19,7 @@ const ReviewPage = () => {
                     alert('Debes iniciar sesión para enviar una reseña.');
                     return;
                 }
-                const response = await fetch('https://home-service-backend-9yhw.onrender.com/api/auth/profile',  {
+                const response = await fetch(`${BACKEND_URL}/api/auth/profile`,  {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

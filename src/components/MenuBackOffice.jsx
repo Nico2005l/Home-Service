@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "../utils/backendURL"; // Importa la URL del backend
 
 const MenuBackOffice = () => {
   const [userSearch, setUserSearch] = useState("");
@@ -14,7 +15,7 @@ const MenuBackOffice = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("https://home-service-backend-9yhw.onrender.com/api/users");
+      const res = await axios.get(`${BACKEND_URL}/api/users`);
       setUsers(res.data);
     } catch (error) {
       console.error("Error al obtener usuarios", error);
@@ -23,7 +24,7 @@ const MenuBackOffice = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await axios.get("https://home-service-backend-9yhw.onrender.com/api/services");
+      const res = await axios.get(`${BACKEND_URL}/api/services`);
       setPosts(res.data);
     } catch (error) {
       console.error("Error al obtener posts", error);
@@ -32,7 +33,7 @@ const MenuBackOffice = () => {
 
   const handleDeleteUser = async (id) => {
     try {
-      await axios.delete(`https://home-service-backend-9yhw.onrender.com/api/users/${id}`);
+      await axios.delete(`${BACKEND_URL}/api/users/${id}`);
       fetchUsers();
       fetchPosts();
     } catch (error) {
@@ -42,7 +43,7 @@ const MenuBackOffice = () => {
 
   const handleDeletePost = async (id) => {
     try {
-      await axios.delete(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`);
+      await axios.delete(`${BACKEND_URL}/api/services/${id}`);
       fetchPosts();
     } catch (error) {
       console.error("Error al eliminar post", error);

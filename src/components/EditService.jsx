@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/NavBar';
 import { ArrowLeft } from 'lucide-react';
+import { BACKEND_URL } from '../utils/backendURL'; // Importa la URL del backend
 
 const CATEGORIES = ["plomeria", "electricista", "limpieza", "jardineria", "otros"];
 
@@ -18,7 +19,7 @@ const EditService = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`);
+        const res = await fetch(`${BACKEND_URL}/api/services/${id}`);
         if (!res.ok) throw new Error('No se encontró el servicio');
         const data = await res.json();
         setPost(data);
@@ -55,7 +56,7 @@ const EditService = () => {
       formData.append('image', newImageFile);
 
       try {
-        const res = await fetch('https://home-service-backend-9yhw.onrender.com/api/services/upload-image', {
+        const res = await fetch(`${BACKEND_URL}/api/services/upload-image`, {
           method: 'POST',
           body: formData
         });
@@ -69,7 +70,7 @@ const EditService = () => {
     }
 
     try {
-      await fetch(`https://home-service-backend-9yhw.onrender.com/api/services/${id}`, {
+      await fetch(`${BACKEND_URL}/api/services/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
