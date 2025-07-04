@@ -48,7 +48,7 @@ const ServiceProfile = () => {
               : "/media/placeholder1.webp"
           }
           alt="image"
-          className="w-48 h-auto mx-auto rounded-lg shadow-md border-4 border-blue-800 transform transition-transform hover:scale-105"
+          className="w-56 h-auto mx-auto rounded-lg shadow-md border-4 border-blue-800 transform transition-transform hover:scale-105"
             />
             <div className="space-y-2">
           <h2 className="text-blue-950 text-3xl capitalize">{service.name}</h2>
