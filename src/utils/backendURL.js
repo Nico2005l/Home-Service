@@ -1,1 +1,1 @@
-export const BACKEND_URL = "home-service-backend-production.up.railway.app";
+export const BACKEND_URL = "https://home-service-backend-production.up.railway.app";
