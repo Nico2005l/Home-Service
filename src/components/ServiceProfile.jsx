@@ -40,7 +40,7 @@ const ServiceProfile = () => {
       <Navbar />
       {/* Perfil */}
         <div className="bg-white rounded-lg shadow-md p-6 space-y-4 m-4 mt-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center bg">
             <img
           src={
             Array.isArray(service.images) && service.images.length > 0
@@ -48,7 +48,7 @@ const ServiceProfile = () => {
               : "/media/placeholder1.webp"
           }
           alt="image"
-          className="w-56 h-auto mx-auto rounded-lg shadow-md border-4 border-blue-800 transform transition-transform hover:scale-105"
+          className="w-full h-64 object-scale-down rounded-lg bg-white"
             />
             <div className="space-y-2">
           <h2 className="text-blue-950 text-3xl capitalize">{service.name}</h2>
