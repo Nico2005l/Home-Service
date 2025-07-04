@@ -45,7 +45,7 @@ const ReviewPage = () => {
             return;
         }
 
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (!token) {
             alert('Debes iniciar sesión para enviar una reseña.');
             return;
@@ -65,7 +65,7 @@ const ReviewPage = () => {
             user_id: userId, // Usa el ID del usuario obtenido
         };
         console.log('Datos de la reseña:', reviewData);
-        fetch('https://home-service-backend-9yhw.onrender.com/api/reviews', {
+        fetch(`${BACKEND_URL}/api/reviews`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
